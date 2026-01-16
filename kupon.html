@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Vanguard Kupon Management Interface - Kelola Kupon</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f98006",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#0a0a0a",
+                        "card-dark": "#141414",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .shadow-sm {
+                box-shadow: inset 0 0 15px rgba(249, 128, 6, 0.05);
+            }
+            .orange-glow-pip {
+                box-shadow: 0 0 12px rgba(249, 128, 6, 0.9);
+            }
+            .metallic-gradient {
+                background: linear-gradient(135deg, #f98006 0%, #ffcc33 50%, #f98006 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .orange-laser-line {
+                box-shadow: 0 0 8px rgba(249, 128, 6, 0.4);
+            }
+            .sidebar-item-active {
+                @apply bg-primary/10 border-r-2 border-primary text-gray-900;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .clock-glow {
+                text-shadow: 0 0 10px rgba(249, 128, 6, 0.6), 0 0 20px rgba(249, 128, 6, 0.2);
+            }
+            .border border-gray-200 {
+                border: 1px solid rgba(249, 128, 6, 0.2);
+            }
+            .btn-gradient {
+                background: linear-gradient(90deg, #f98006 0%, #ffcc33 100%);
+            }
+            .progress-glow {
+                box-shadow: 0 0 10px rgba(249, 128, 6, 0.4);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light font-display text-gray-900 transition-colors duration-300 antialiased overflow-hidden">
+    <div class="flex h-screen w-full">
+        <!-- Sidebar -->
+        <aside class="w-72 border-r border-primary/20 bg-white/90 shadow-lg backdrop-blur-xl flex flex-col z-50">
+            <div class="p-8">
+                <div class="flex items-center gap-3">
+                    <div class="size-8 flex items-center justify-center">
+                        <svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f98006;stop-opacity:1"></stop>
+                                    <stop offset="100%" style="stop-color:#ffcc33;stop-opacity:1"></stop>
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                                fill="url(#logoGrad)"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-extrabold tracking-tighter metallic-gradient">ND GROUP</h2>
+                </div>
+                <p class="mt-2 text-[10px] text-gray-600 uppercase tracking-[0.4em] font-bold">Vanguard V2</p>
+            </div>
+
+            <nav class="flex-1 px-4 space-y-2 mt-4">
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="index.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">dashboard_customize</span>
+                    Dashboard
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="admin-management.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">admin_panel_settings</span>
+                    Kelola Admin
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="kasir.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">point_of_sale</span>
+                    Kelola Kasir
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-bold tracking-widest uppercase transition-all sidebar-item-active group"
+                    href="kupon.html">
+                    <span
+                        class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">confirmation_number</span>
+                    Kelola Kupon
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="voucher.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">loyalty</span>
+                    Kelola Voucher
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="export.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">download</span>
+                    Export Data
+                </a>
+            </nav>
+
+            <div class="p-6 border-t border-gray-200 space-y-4">
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-gray-900 ml-1">Terminal Auth
+                        Level</label>
+                    <div id="authLevel"
+                        class="bg-primary/5 border border-primary/20 rounded px-3 py-2 text-[10px] font-bold text-primary uppercase tracking-widest">
+                        Level 4: Admin
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <button onclick="showSystemLogs()"
+                        class="w-full flex items-center justify-between gap-3 px-4 py-3 rounded border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all group overflow-hidden relative">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-primary">System Logs</span>
+                        <span
+                            class="material-symbols-outlined text-lg text-primary orange-glow-pip rounded-full p-1 bg-primary/20">terminal</span>
+                    </button>
+                </div>
+                <button onclick="logout()"
+                    class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 transition-all text-red-400 hover:text-red-300">
+                    <span class="material-symbols-outlined text-sm">logout</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto scrollbar-hide flex flex-col">
+            <!-- Header -->
+            <header
+                class="sticky top-0 z-40 flex items-center justify-between border-b border-gray-200 bg-background-light/80 px-10 py-5 backdrop-blur-md">
+                <div class="flex items-center gap-8">
+                    <h1 class="text-2xl font-black italic tracking-tighter uppercase">Vanguard<span
+                            class="text-primary not-italic font-light ml-2">Terminal</span></h1>
+                    <div class="h-6 w-px bg-white/10"></div>
+                    <div class="flex items-center gap-8">
+                        <div class="flex items-center gap-3">
+                            <span class="h-2 w-2 rounded-full bg-primary animate-ping"></span>
+                            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-900">System Link:
+                                Stable</span>
+                        </div>
+                        <div class="flex flex-col border-l border-primary/20 pl-8">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[8px] font-black uppercase tracking-[0.3em] text-gray-900">Mission
+                                    Time</span>
+                                <div class="h-[1px] w-4 bg-primary/30"></div>
+                            </div>
+                            <div class="flex items-baseline gap-2 font-mono clock-glow">
+                                <span class="text-xl font-bold text-primary tracking-wider"
+                                    id="vanguard-clock">00:00:00</span>
+                                <span class="text-[10px] font-bold text-primary/80 uppercase tracking-widest"
+                                    id="vanguard-date">--- -- ----</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="relative">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm">search</span>
+                        <input id="searchInput"
+                            class="w-64 rounded bg-gray-100 border border-gray-300 py-2 pl-10 pr-4 text-[10px] tracking-widest uppercase focus:ring-1 focus:ring-primary focus:border-primary transition-all font-mono"
+                            placeholder="TRANSACTION ID SEARCH..." type="text" />
+                    </div>
+                    <div class="flex gap-2">
+                        <select id="filterToko"
+                            class="rounded bg-gray-100 border border-gray-300 py-2 px-3 text-[10px] tracking-widest uppercase focus:ring-1 focus:ring-primary focus:border-primary transition-all">
+                            <option value="">All Stores</option>
+                        </select>
+                        <select id="filterStatus"
+                            class="rounded bg-gray-100 border border-gray-300 py-2 px-3 text-[10px] tracking-widest uppercase focus:ring-1 focus:ring-primary focus:border-primary transition-all">
+                            <option value="">All Status</option>
+                            <option value="false">Pending</option>
+                            <option value="true">Claimed</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-3 pl-4 border-l border-gray-300">
+                        <div class="text-right">
+                            <p class="text-[10px] font-bold text-gray-900 tracking-widest uppercase" id="headerUserName">
+                                Admin</p>
+                            <p class="text-[9px] text-primary uppercase font-bold tracking-tighter">Level 4 Access</p>
+                        </div>
+                        <div
+                            class="h-10 w-10 rounded-full border border-primary/40 p-0.5 bg-primary/20 flex items-center justify-center">
+                            <span class="text-primary font-bold text-sm" id="headerUserAvatar">A</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-10 space-y-8">
+                <!-- Page Title Section -->
+                <div class="flex items-end justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="h-[1px] w-8 bg-primary"></div>
+                            <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary">Kupon
+                                Management</span>
+                        </div>
+                        <h2 class="text-4xl font-black uppercase tracking-tight italic">Kupon Terminal <span
+                                class="text-primary not-italic">Hub</span></h2>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <p class="text-[9px] text-gray-600 uppercase tracking-widest">Total Kupon</p>
+                            <p class="text-2xl font-black text-primary" id="totalKupon">0</p>
+                        </div>
+                        <div class="h-12 w-px bg-white/10"></div>
+                        <div class="text-right">
+                            <p class="text-[9px] text-gray-600 uppercase tracking-widest">Diklaim</p>
+                            <p class="text-2xl font-black text-green-500" id="claimedKupon">0</p>
+                        </div>
+                        <div class="h-12 w-px bg-white/10"></div>
+                        <div class="text-right">
+                            <p class="text-[9px] text-gray-600 uppercase tracking-widest">Pending</p>
+                            <p class="text-2xl font-black text-yellow-500" id="pendingKupon">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kupon Table -->
+                <div
+                    class="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden shadow-sm backdrop-blur-sm">
+                    <div class="grid grid-cols-12 border-b border-primary/20 bg-primary/5 py-4 px-8">
+                        <div class="col-span-3 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900">
+                            Transaction ID</div>
+                        <div class="col-span-3 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900">Kode
+                            Kupon</div>
+                        <div class="col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900">Store
+                        </div>
+                        <div class="col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900">Status
+                        </div>
+                        <div class="col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 text-right">
+                            Actions</div>
+                    </div>
+                    <div class="divide-y divide-primary/10" id="kuponTable">
+                        <div class="py-8 text-center text-gray-600">
+                            <span class="material-symbols-outlined text-4xl text-primary/30 animate-pulse">sync</span>
+                            <p class="mt-2 text-[10px] uppercase tracking-widest">Loading coupons...</p>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+                        <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest" id="kuponCount">
+                            Syncing coupon registry with central server...</p>
+                        <div class="flex gap-2">
+                            <button
+                                class="px-3 py-1 border border-gray-300 text-[10px] uppercase font-bold text-gray-600 hover:text-gray-900 transition-colors">Prev</button>
+                            <button
+                                class="px-3 py-1 border border-primary text-[10px] uppercase font-bold text-primary bg-primary/10">1</button>
+                            <button
+                                class="px-3 py-1 border border-gray-300 text-[10px] uppercase font-bold text-gray-600 hover:text-gray-900 transition-colors">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kupon Activity Trend -->
+                <div class="rounded-xl border border-gray-200 bg-white shadow-sm p-8 shadow-sm flex flex-col">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">analytics</span>
+                            <div>
+                                <h3 class="text-sm font-black uppercase tracking-[0.3em] text-gray-900">Kupon Activity
+                                    Trend</h3>
+                                <p class="text-[9px] text-gray-600 uppercase font-bold tracking-widest">Daily Coupon
+                                    Creation & Claim Analysis</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-2">
+                                <span class="h-1.5 w-4 bg-primary rounded-full"></span>
+                                <span class="text-[9px] text-gray-600 font-bold uppercase">Created</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="h-1.5 w-4 bg-green-500 rounded-full"></span>
+                                <span class="text-[9px] text-gray-600 font-bold uppercase">Claimed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-48 w-full relative">
+                        <svg class="h-full w-full" preserveAspectRatio="none" viewBox="0 0 1000 150">
+                            <path
+                                d="M0,120 L100,115 L200,110 L300,118 L400,112 L500,105 L600,110 L700,115 L800,108 L900,112 L1000,105"
+                                fill="none" stroke="#22c55e" stroke-dasharray="4" stroke-width="1"></path>
+                            <path class="orange-laser-line"
+                                d="M0,140 L100,130 L200,110 L300,80 L400,95 L500,45 L600,60 L700,30 L800,40 L900,20 L1000,15"
+                                fill="none" stroke="#f98006" stroke-width="2"></path>
+                            <path
+                                d="M0,140 L100,130 L200,110 L300,80 L400,95 L500,45 L600,60 L700,30 L800,40 L900,20 L1000,15"
+                                fill="none" stroke="rgba(249, 128, 6, 0.2)" stroke-width="8"></path>
+                        </svg>
+                        <div class="absolute inset-0 flex justify-between items-end pointer-events-none px-1">
+                            <span class="text-[8px] text-gray-500 font-mono">MON</span>
+                            <span class="text-[8px] text-gray-500 font-mono">TUE</span>
+                            <span class="text-[8px] text-gray-500 font-mono">WED</span>
+                            <span class="text-[8px] text-gray-500 font-mono">THU</span>
+                            <span class="text-[8px] text-gray-500 font-mono">FRI</span>
+                            <span class="text-[8px] text-gray-500 font-mono">SAT</span>
+                            <span class="text-[8px] text-gray-500 font-mono">SUN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer
+                    class="rounded border border-primary/20 bg-white/90 shadow-lg p-4 flex items-center justify-between mt-auto">
+                    <div class="flex items-center gap-8">
+                        <div class="flex items-center gap-2">
+                            <span class="h-1.5 w-1.5 rounded-full bg-primary orange-glow-pip"></span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-600">Node:
+                                Operational-HQ-01</span>
+                        </div>
+                        <div class="h-4 w-px bg-white/10"></div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-600">Network:
+                                Secure Vanguard Mesh</span>
+                        </div>
+                        <div class="h-4 w-px bg-white/10"></div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-600">Uptime:
+                                99.998%</span>
+                        </div>
+                    </div>
+                    <div class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary/80">
+                        © ND GROUP TERMINAL V2.0.44 • ELITE ENCRYPTED CHANNEL
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
+    <script>
+        // Clock functionality
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            const clockEl = document.getElementById('vanguard-clock');
+            const dateEl = document.getElementById('vanguard-date');
+            if (clockEl) clockEl.textContent = `${hours}:${minutes}:${seconds}`;
+            if (dateEl) dateEl.textContent = `${month} ${day} ${year}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        let currentSession = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            currentSession = Utils.requireAuth('admin');
+            if (!currentSession) return;
+
+            // Set user info
+            document.getElementById('headerUserName').textContent = currentSession.username;
+            document.getElementById('headerUserAvatar').textContent = currentSession.username.charAt(0).toUpperCase();
+
+            // Set auth level
+            const isSuper = currentSession.is_super === true;
+            document.getElementById('authLevel').textContent = isSuper ? 'Level 5: Super Admin' : 'Level 4: Admin';
+
+            loadStores();
+            loadKupon();
+
+            // Setup filters
+            document.getElementById('searchInput').addEventListener('input', Utils.debounce(loadKupon, 300));
+            document.getElementById('filterToko').addEventListener('change', loadKupon);
+            document.getElementById('filterStatus').addEventListener('change', loadKupon);
+        });
+
+        function loadStores() {
+            const kasirs = DB.findBy('users', 'role', 'kasir');
+            const stores = [...new Set(kasirs.map(k => k.toko_name).filter(Boolean))];
+            const select = document.getElementById('filterToko');
+
+            stores.forEach(store => {
+                const option = document.createElement('option');
+                option.value = store;
+                option.textContent = store;
+                select.appendChild(option);
+            });
+        }
+
+        function loadKupon() {
+            const search = document.getElementById('searchInput').value.trim().toLowerCase();
+            const filterToko = document.getElementById('filterToko').value;
+            const filterStatus = document.getElementById('filterStatus').value;
+
+            let transactions = DB.getAll('transactions');
+
+            // Update stats
+            const totalCount = transactions.length;
+            const claimedCount = transactions.filter(t => t.is_claimed).length;
+            const pendingCount = totalCount - claimedCount;
+
+            document.getElementById('totalKupon').textContent = totalCount;
+            document.getElementById('claimedKupon').textContent = claimedCount;
+            document.getElementById('pendingKupon').textContent = pendingCount;
+
+            // Apply filters
+            if (search) {
+                transactions = transactions.filter(t =>
+                    t.no_transaksi.toLowerCase().includes(search) ||
+                    t.kode_kupon.toLowerCase().includes(search)
+                );
+            }
+            if (filterToko) {
+                transactions = transactions.filter(t => t.toko_name === filterToko);
+            }
+            if (filterStatus !== '') {
+                const isClaimed = filterStatus === 'true';
+                transactions = transactions.filter(t => t.is_claimed === isClaimed);
+            }
+
+            // Sort by date desc
+            transactions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            const container = document.getElementById('kuponTable');
+            const countEl = document.getElementById('kuponCount');
+
+            if (!transactions.length) {
+                container.innerHTML = `
+                    <div class="py-8 text-center text-gray-600">
+                        <span class="material-symbols-outlined text-4xl text-primary/30">confirmation_number</span>
+                        <p class="mt-2 text-[10px] uppercase tracking-widest">${search || filterToko || filterStatus !== '' ? 'No matching coupons found' : 'No coupons in registry'}</p>
+                    </div>
+                `;
+                countEl.textContent = 'No coupons found';
+                return;
+            }
+
+            container.innerHTML = transactions.map((t, index) => {
+                const isClaimed = t.is_claimed;
+
+                return `
+                    <div class="grid grid-cols-12 items-center py-5 px-8 hover:bg-primary/[0.02] transition-colors group">
+                        <div class="col-span-3 flex items-center gap-4">
+                            <div class="size-12 flex items-center justify-center rounded-lg border ${isClaimed ? 'border-green-500/30 bg-green-500/5' : 'border-primary/30 bg-primary/5'}">
+                                <span class="material-symbols-outlined ${isClaimed ? 'text-green-500' : 'text-primary'} text-2xl">confirmation_number</span>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold uppercase tracking-wider text-gray-900">${t.no_transaksi}</h4>
+                                <p class="text-[10px] text-gray-600 font-mono">${Utils.formatDateShort(t.created_at)}</p>
+                            </div>
+                        </div>
+                        <div class="col-span-3 flex flex-col gap-1">
+                            <span class="text-[11px] font-bold text-primary font-mono uppercase tracking-wider">${t.kode_kupon}</span>
+                            <span class="text-[10px] text-gray-600">${Utils.formatCurrency(t.nominal)}</span>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="px-3 py-1 bg-primary/10 border border-primary/30 text-primary text-[9px] font-black uppercase tracking-widest rounded">${t.toko_name}</span>
+                        </div>
+                        <div class="col-span-2 flex flex-col gap-1">
+                            <div class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full ${isClaimed ? 'bg-green-500 orange-glow-pip' : 'bg-yellow-500'}"></span>
+                                <span class="text-[11px] font-bold ${isClaimed ? 'text-green-400' : 'text-yellow-400'} font-mono uppercase">${isClaimed ? 'Diklaim' : 'Pending'}</span>
+                            </div>
+                        </div>
+                        <div class="col-span-2 flex justify-end gap-3">
+                            <button onclick="deleteKupon('${t.id}')" 
+                                class="p-2 border border-red-500/20 rounded hover:border-red-500/60 hover:bg-red-500/5 transition-all group/btn">
+                                <span class="material-symbols-outlined text-red-500/60 group-hover/btn:text-red-500 text-xl transition-colors">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            countEl.textContent = `Displaying ${transactions.length} coupon${transactions.length > 1 ? 's' : ''} in terminal hub`;
+        }
+
+        function deleteKupon(id) {
+            if (!confirm('Confirm deletion of this coupon? This will also delete associated vouchers.')) return;
+
+            // Delete related vouchers
+            const vouchers = DB.findBy('vouchers', 'transaction_id', id);
+            vouchers.forEach(v => DB.delete('vouchers', v.id));
+
+            // Delete transaction
+            DB.delete('transactions', id);
+            loadKupon();
+        }
+
+        function showSystemLogs() {
+            alert('System Logs: All operations normal');
+        }
+
+        function logout() {
+            DB.logout();
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>

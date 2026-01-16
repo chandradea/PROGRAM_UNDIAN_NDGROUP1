@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Kasir - Undian Berhadiah</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #212121 0%, #424242 50%, #FF5722 100%);
+            padding: 1rem;
+        }
+
+        .login-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #212121 0%, #424242 100%);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .login-header h1 {
+            font-size: 1.5rem;
+            color: var(--color-text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .login-header p {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .demo-hint {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--color-surface);
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .demo-hint code {
+            background: white;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="../assets/logo.jpg" alt="ND GROUP"
+                    style="height: 60px; margin-bottom: 1rem; border-radius: 0.5rem;">
+                <h1>Portal Kasir</h1>
+                <p>Masuk untuk membuat kupon undian</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Masukkan username" required
+                        autofocus>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Masukkan password" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pilih Lokasi Toko</label>
+                    <select id="selectedStore" class="form-input" required>
+                        <option value="">-- Pilih Toko --</option>
+                    </select>
+                    <small style="color: #666; font-size: 0.8rem; margin-top: 0.25rem; display: block;">
+                        Pilih toko sesuai penugasan Anda
+                    </small>
+                </div>
+                <button type="submit" class="btn btn-dark btn-lg btn-block">Masuk</button>
+            </form>
+
+            <a href="../index.html" class="back-link">← Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
+    <script>
+        // Redirect if already logged in as kasir (check kasir-specific session)
+        if (DB.hasKasirRole()) {
+            window.location.href = 'index.html';
+        }
+
+        // Load stores on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const stores = DB.getActiveStores();
+            const select = document.getElementById('selectedStore');
+
+            if (stores.length === 0) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'Tidak ada toko tersedia';
+                option.disabled = true;
+                select.appendChild(option);
+            } else {
+                stores.forEach(store => {
+                    const option = document.createElement('option');
+                    option.value = store;
+                    option.textContent = store;
+                    select.appendChild(option);
+                });
+            }
+        });
+
+        // Login form handler with store validation
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const selectedStore = document.getElementById('selectedStore').value;
+
+            // Validate store selection
+            if (!selectedStore) {
+                Utils.error('Silakan pilih lokasi toko');
+                return;
+            }
+
+            // Use new loginWithStoreValidation for double-check
+            const result = DB.loginWithStoreValidation(username, password, selectedStore);
+
+            if (result.success) {
+                Utils.success('Login berhasil!');
+                setTimeout(() => window.location.href = 'index.html', 500);
+            } else {
+                Utils.error(result.error);
+            }
+        });
+    </script>
+</body>
+
+</html>

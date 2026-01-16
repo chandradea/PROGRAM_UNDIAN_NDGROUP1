@@ -2,297 +2,579 @@
 <html lang="id">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>ND Group - Program Undian Berhadiah</title>
-    <meta name="description" content="Klaim hadiah undian Anda dengan memasukkan kode kupon dari struk belanja." />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Security: No-cache to prevent back button access after logout -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Kasir - Undian Berhadiah</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Space+Grotesk:wght@500;700&family=Orbitron:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0"
+        rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: "#EA4C1D",
-                        secondary: "#D93A0E",
-                        "background-light": "#F8FAFC",
-                        "background-dark": "#0F172A",
-                        "card-light": "#FFFFFF",
-                        "card-dark": "#1E293B",
+                        primary: "#F25C24",
+                        "primary-dark": "#D94A15",
+                        "gold-accent": "#D4AF37",
+                        "off-white": "#FAFAFA",
+                        "luxury-border": "rgba(242, 92, 36, 0.15)",
+                        "background-dark": "#0B0F15",
+                        "card-dark": "#161B22",
+                        "border-dark": "#30363D",
                     },
                     fontFamily: {
-                        display: ["'Plus Jakarta Sans'", "sans-serif"],
-                    },
-                    borderRadius: {
-                        DEFAULT: "0.75rem",
-                        'xl': "1rem",
-                        '2xl': "1.5rem",
-                        '3xl': "2rem",
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['Orbitron', 'monospace'],
                     },
                     boxShadow: {
-                        'soft': '0 20px 40px -10px rgba(0, 0, 0, 0.08)',
-                        'glow': '0 0 20px rgba(234, 76, 29, 0.3)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.05)',
+                        'glow-orange': '0 0 15px rgba(242, 92, 36, 0.3)',
+                    },
+                    backgroundImage: {
+                        'gradient-luxury': 'linear-gradient(135deg, #F25C24 0%, #E04221 100%)',
+                        'subtle-depth': 'radial-gradient(circle at 50% 50%, #FFFFFF 0%, #F3F4F6 100%)',
                     }
                 },
             },
         };
     </script>
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(212, 175, 55, 0.1);
         }
 
-        .header-bg {
-            background: linear-gradient(135deg, #EA4C1D 0%, #C4380F 100%);
+        .input-luxury:focus {
+            box-shadow: 0 0 0 3px rgba(242, 92, 36, 0.1);
         }
 
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            color: white;
-            font-weight: 500;
-            z-index: 9999;
-            animation: slideIn 0.3s ease;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        .btn-luxury {
+            position: relative;
+            overflow: hidden;
         }
 
-        .toast.success {
-            background: linear-gradient(135deg, #10B981, #059669);
+        .btn-luxury::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.3) 45%, transparent 60%);
+            animation: shimmer 6s infinite linear;
         }
 
-        .toast.error {
-            background: linear-gradient(135deg, #EF4444, #DC2626);
-        }
+        @keyframes shimmer {
+            0% {
+                transform: translateX(0%);
+            }
 
-        @keyframes slideIn {
-            from {
+            100% {
                 transform: translateX(100%);
+            }
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0%;
                 opacity: 0;
             }
 
-            to {
-                transform: translateX(0);
+            10% {
                 opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #F25C24;
+            box-shadow: 0 0 10px #F25C24;
+            animation: scan 3s infinite ease-in-out;
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 40px -10px rgba(242, 92, 36, 0.15);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #E5E7EB;
+            border-radius: 20px;
+        }
+
+        #print-area {
+            display: none;
+        }
+
+        @media print {
+            #print-area {
+                display: block !important;
             }
         }
     </style>
 </head>
 
 <body
-    class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-sans transition-colors duration-300">
+    class="bg-subtle-depth min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-primary/20 selection:text-primary">
+    <!-- Decorative Blurs -->
+    <div class="fixed top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="fixed bottom-1/4 right-1/4 w-96 h-96 bg-gold-accent/5 rounded-full blur-[100px] pointer-events-none">
+    </div>
 
-    <!-- Header Section -->
-    <header class="header-bg relative pb-24 pt-8 px-4 sm:px-6 lg:px-8 text-center text-white overflow-hidden shadow-xl">
-        <!-- Decorative Blurs -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+    <!-- Navbar -->
+    <nav class="w-full px-8 py-6 flex items-center justify-between relative z-20">
+        <div class="flex items-center gap-0 opacity-90 hover:opacity-100 transition-opacity">
             <div
-                class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white mix-blend-overlay blur-3xl opacity-20">
+                class="bg-primary text-white font-bold px-2 py-1 text-lg rounded-l-md italic border border-primary shadow-lg shadow-primary/20">
+                ND</div>
+            <div class="bg-slate-900 text-white font-bold px-2 py-1 text-lg rounded-r-md border border-slate-900">GROUP
             </div>
-            <div
-                class="absolute top-1/2 right-0 w-64 h-64 rounded-full bg-yellow-300 mix-blend-overlay blur-3xl opacity-20">
-            </div>
+            <span id="tokoName"
+                class="ml-3 px-2 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-500 shadow-sm">-</span>
         </div>
-
-        <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-            <!-- ND GROUP Logo -->
-            <div
-                class="flex items-center justify-center gap-5 mb-6 select-none transform hover:scale-105 transition-transform duration-300">
-                <div
-                    class="w-24 h-24 md:w-32 md:h-32 bg-[#DC2626] rounded-3xl flex items-center justify-center shadow-2xl border-2 border-white/20">
-                    <span
-                        class="font-display font-black italic text-5xl md:text-7xl text-white tracking-tighter">ND</span>
-                </div>
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3 text-sm font-medium text-gray-600">
                 <span
-                    class="font-display font-bold text-5xl md:text-7xl text-white tracking-wide drop-shadow-md">GROUP</span>
+                    class="w-9 h-9 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-[20px]">person</span>
+                </span>
+                <span id="userName" class="tracking-wide">-</span>
             </div>
-
-            <!-- Badge -->
-            <div
-                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-sm font-medium text-white mb-6 shadow-sm">
-                <span class="material-symbols-outlined text-yellow-300" style="font-size: 20px;">campaign</span>
-                Program Undian Berhadiah
-            </div>
-
-            <!-- Title -->
-            <h1
-                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight drop-shadow-md text-white font-display">
-                Menangkan Hadiah Menarik!
-            </h1>
+            <button onclick="logout()"
+                class="bg-slate-900 text-white px-6 py-2 rounded-full text-xs font-semibold tracking-wider hover:bg-slate-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                LOGOUT
+            </button>
         </div>
-    </header>
+    </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow relative px-4 sm:px-6 lg:px-8 -mt-16 mb-16 z-20">
-        <div class="max-w-md mx-auto">
-            <!-- Claim Card -->
-            <div
-                class="bg-card-light dark:bg-card-dark rounded-3xl shadow-soft p-8 md:p-10 border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+    <main class="flex-grow flex items-center justify-center p-6 relative z-10">
+        <!-- Input Section - Ultra Premium Design -->
+        <div id="inputSection"
+            class="w-full max-w-lg glass-card rounded-3xl p-10 md:p-12 transform transition-all duration-500 hover:scale-[1.005]">
+            <div class="text-center mb-10">
+                <div
+                    class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-white shadow-sm mb-6 group">
+                    <span
+                        class="material-symbols-outlined text-3xl text-primary transition-transform group-hover:scale-110 duration-300">edit_square</span>
+                </div>
+                <h1 class="text-4xl font-serif font-bold text-slate-900 tracking-tight mb-2">Input Transaksi</h1>
+                <p class="text-gray-400 text-sm font-light tracking-wide">Masukkan detail transaksi untuk generate kupon
+                </p>
+            </div>
 
-                <!-- Card Header -->
-                <div class="text-center mb-8">
+            <form id="transactionForm" class="space-y-8">
+                <div class="space-y-2 group">
+                    <label
+                        class="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-widest ml-1 transition-colors group-focus-within:text-primary">
+                        <span class="material-symbols-outlined text-sm opacity-70">receipt_long</span>
+                        No Transaksi <span class="text-primary">*</span>
+                    </label>
+                    <input type="text" id="noTransaksi" placeholder="Contoh: TRX-12345" required
+                        class="input-luxury w-full bg-white/50 border border-gray-200 text-gray-800 text-lg rounded-xl px-4 py-3.5 focus:border-primary/50 focus:ring-0 focus:bg-white transition-all placeholder:text-gray-300 font-medium">
+                </div>
+
+                <div class="space-y-2 group">
+                    <label
+                        class="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-widest ml-1 transition-colors group-focus-within:text-primary">
+                        <span class="material-symbols-outlined text-sm opacity-70">payments</span>
+                        Nominal Belanja (Rp) <span class="text-primary">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium z-10">Rp</span>
+                        <input type="text" id="nominal" placeholder="0" required
+                            class="input-luxury w-full bg-white/50 border border-gray-200 text-gray-800 text-lg rounded-xl pl-12 pr-4 py-3.5 focus:border-primary/50 focus:ring-0 focus:bg-white transition-all placeholder:text-gray-300 font-medium">
+                    </div>
+                    <p class="text-[10px] text-gray-400 text-right italic pr-1">*Minimal Rp 100.000 untuk 1 kupon</p>
+                </div>
+
+                <!-- Nominal Preview -->
+                <div id="nominalPreview"
+                    class="hidden bg-gradient-to-r from-primary/5 to-gold-accent/5 rounded-2xl p-5 border border-primary/10">
+                    <div class="text-center mb-4">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider">Nominal Belanja</div>
+                        <div id="nominalDisplay" class="text-2xl font-bold text-primary mt-1">Rp 0</div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="text-center p-3 bg-white/80 rounded-xl border border-gray-100">
+                            <div id="previewBesar" class="text-2xl font-bold text-slate-900">0</div>
+                            <div class="text-xs text-gray-500 mt-1">Voucher Besar</div>
+                        </div>
+                        <div class="text-center p-3 bg-white/80 rounded-xl border border-gray-100">
+                            <div id="previewSedang" class="text-2xl font-bold text-slate-900">0</div>
+                            <div class="text-xs text-gray-500 mt-1">Voucher Sedang</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="btn-luxury w-full bg-gradient-luxury text-white text-lg font-medium py-4 rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-center gap-3 group mt-4">
+                    <span
+                        class="material-symbols-outlined group-hover:rotate-12 transition-transform duration-300">confirmation_number</span>
+                    Generate Kupon
+                </button>
+            </form>
+        </div>
+
+        <!-- Receipt Section - Modern Design -->
+        <div id="receiptSection"
+            class="hidden w-full max-w-lg bg-white rounded-2xl border border-gray-200 glow-effect overflow-hidden transform transition-all">
+            <!-- Success Header -->
+            <div class="bg-green-500/10 border-b border-green-500/20 p-6 text-center">
+                <div
+                    class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500 text-white mb-3 shadow-lg shadow-green-500/30">
+                    <span class="material-symbols-outlined text-3xl">check</span>
+                </div>
+                <h2 class="text-2xl font-display font-bold text-gray-900">Kupon Berhasil Dibuat!</h2>
+                <p class="text-sm text-gray-500 mt-1">Cetak struk untuk diberikan ke pembeli</p>
+            </div>
+
+            <!-- Receipt Content -->
+            <div class="p-8 space-y-8">
+                <!-- Toko & No Trans -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col items-start p-3 rounded-lg bg-gray-50 border border-gray-100">
+                        <div class="flex items-center gap-2 text-xs text-gray-400 uppercase tracking-wider mb-1">
+                            <span class="material-symbols-outlined text-sm">storefront</span>
+                            Toko
+                        </div>
+                        <span id="receiptToko" class="font-medium text-lg text-gray-900 pl-6">-</span>
+                    </div>
+                    <div class="flex flex-col items-start p-3 rounded-lg bg-gray-50 border border-gray-100">
+                        <div class="flex items-center gap-2 text-xs text-gray-400 uppercase tracking-wider mb-1">
+                            <span class="material-symbols-outlined text-sm">receipt_long</span>
+                            No Trans
+                        </div>
+                        <span id="receiptNoTrans" class="font-mono text-base text-gray-900 pl-6">-</span>
+                    </div>
+                </div>
+
+                <!-- Kode Kupon -->
+                <div class="relative group">
                     <div
-                        class="w-14 h-14 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                        <span class="material-symbols-outlined text-primary"
-                            style="font-size: 32px;">confirmation_number</span>
+                        class="absolute -inset-0.5 bg-gradient-to-r from-primary to-orange-600 rounded-xl opacity-20 group-hover:opacity-40 transition duration-500 blur">
                     </div>
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 font-display">Klaim Hadiah Anda
-                    </h2>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">
-                        Masukkan data dari struk belanja untuk mengecek hadiah
-                    </p>
-                </div>
-
-                <!-- Claim Form -->
-                <form id="claimForm" class="space-y-6">
-                    <!-- No Transaksi Field -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
-                            for="noTransaksi">
-                            No Transaksi <span class="text-red-500">*</span>
-                        </label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <span class="material-symbols-outlined text-gray-400"
-                                    style="font-size: 20px;">receipt_long</span>
-                            </div>
-                            <input
-                                class="block w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary/20 focus:border-primary dark:bg-gray-800 transition-all duration-200 text-sm shadow-sm"
-                                id="noTransaksi" name="noTransaksi" placeholder="Contoh: TRX-12345" required
-                                type="text" />
+                    <div class="relative bg-white rounded-xl p-6 text-center border border-gray-200">
+                        <p class="text-xs font-semibold text-primary uppercase tracking-[0.2em] mb-3">Kode Kupon Anda
+                        </p>
+                        <div id="receiptKodeKupon"
+                            class="font-mono text-base sm:text-lg font-bold text-gray-900 tracking-wider whitespace-nowrap">
+                            -
                         </div>
-                    </div>
-
-                    <!-- Kode Kupon Field -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
-                            for="kodeKupon">
-                            Kode Kupon <span class="text-red-500">*</span>
-                        </label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <span class="material-symbols-outlined text-gray-400"
-                                    style="font-size: 20px;">qr_code_2</span>
-                            </div>
-                            <input
-                                class="block w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary/20 focus:border-primary dark:bg-gray-800 transition-all duration-200 text-sm shadow-sm uppercase"
-                                id="kodeKupon" name="kodeKupon" placeholder="CONTOH: ND2-KUPON-A7X" required type="text"
-                                style="text-transform: uppercase;" />
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit"
-                        class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-orange-500/30 transition-all duration-300 transform hover:-translate-y-0.5">
-                        <span class="absolute left-0 inset-y-0 flex items-center pl-4">
-                            <span class="material-symbols-outlined group-hover:animate-ping text-orange-100"
-                                style="font-size: 20px;">search</span>
-                        </span>
-                        Cek Keberuntungan
-                    </button>
-                </form>
-
-                <!-- Divider -->
-                <div class="relative my-8">
-                    <div aria-hidden="true" class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-100 dark:border-gray-700"></div>
-                    </div>
-                    <div class="relative flex justify-center">
-                        <span
-                            class="px-3 bg-card-light dark:bg-card-dark text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-                            atau
-                        </span>
                     </div>
                 </div>
 
-                <!-- Check Voucher Link -->
-                <div class="text-center">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        Sudah punya voucher?
-                        <a class="font-bold text-primary hover:text-secondary transition-colors duration-200 hover:underline decoration-2 decoration-primary/30"
-                            href="cek-voucher.html">
-                            Cek Voucher Saya
-                        </a>
-                    </p>
+                <!-- QR Code -->
+                <div class="flex flex-col items-center gap-4">
+                    <div class="relative p-3 bg-white rounded-xl border border-gray-200 shadow-sm">
+                        <div class="relative overflow-hidden rounded-lg">
+                            <img id="receiptQR" alt="QR Code" class="w-32 h-32 md:w-40 md:h-40 object-contain">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-400 mb-1">Scan QR atau buka link:</p>
+                        <a id="receiptUrl" href="#"
+                            class="text-xs font-mono text-primary hover:underline hover:text-orange-400 transition-colors">-</a>
+                    </div>
+                </div>
+
+                <!-- Hadiah & Nominal -->
+                <div class="space-y-3 pt-4 border-t border-dashed border-gray-200">
+                    <div class="flex items-center justify-between text-sm">
+                        <div class="flex items-center gap-2 text-gray-500">
+                            <span class="material-symbols-outlined text-lg">redeem</span>
+                            <span>Hadiah</span>
+                        </div>
+                        <span id="receiptHadiah" class="font-medium text-gray-900">-</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <div class="flex items-center gap-2 text-gray-500">
+                            <span class="material-symbols-outlined text-lg">payments</span>
+                            <span>Nominal</span>
+                        </div>
+                        <span id="receiptNominal" class="font-bold text-primary text-lg">-</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Footer -->
-            <div class="mt-8 text-center space-y-2">
-                <p class="text-xs text-gray-400 dark:text-gray-500 font-medium">
-                    © 2024 ND Group. Syarat &amp; Ketentuan berlaku.
-                </p>
-                <p class="text-xs text-gray-400 dark:text-gray-500">
-                    <a href="admin/login.html" class="hover:text-primary transition-colors">Admin</a>
-                    <span class="mx-2">|</span>
-                    <a href="kasir/login.html" class="hover:text-primary transition-colors">Kasir</a>
-                </p>
+            <!-- Action Buttons -->
+            <div class="bg-gray-50 p-6 flex flex-col sm:flex-row gap-3 border-t border-gray-200">
+                <button onclick="printReceipt()"
+                    class="btn-luxury flex-1 flex items-center justify-center gap-2 bg-gradient-luxury text-white py-3 px-4 rounded-xl font-medium transition-all duration-200 shadow-lg shadow-primary/20 hover:shadow-primary/40 transform hover:-translate-y-0.5">
+                    <span class="material-symbols-outlined">print</span>
+                    Print Struk
+                </button>
+                <button onclick="newTransaction()"
+                    class="flex-1 flex items-center justify-center gap-2 bg-transparent hover:bg-gray-100 text-gray-700 border border-gray-300 py-3 px-4 rounded-xl font-medium transition-all duration-200 hover:border-primary/50 hover:text-primary">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    Transaksi Baru
+                </button>
             </div>
         </div>
     </main>
 
-    <!-- Scripts -->
-    <script src="js/database.js"></script>
-    <script src="js/utils.js"></script>
+    <!-- Bottom Gradient Line -->
+    <div class="fixed bottom-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent z-50"></div>
+
+    <!-- Hidden Print Area -->
+    <div id="print-area"></div>
+
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
     <script>
-        document.getElementById('claimForm').addEventListener('submit', function (e) {
+        let session = null;
+        let lastTransaction = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            session = Utils.requireAuth('kasir');
+            if (!session) return;
+
+            document.getElementById('tokoName').textContent = session.toko_name || 'Unknown';
+            document.getElementById('userName').textContent = session.username;
+        });
+
+        function formatCurrency(num) {
+            return 'Rp ' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Nominal input formatting
+        document.getElementById('nominal').addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, '');
+            this.value = value;
+
+            if (value) {
+                const nominal = parseInt(value);
+                const vouchers = Utils.hitungVoucher(nominal);
+
+                document.getElementById('nominalDisplay').textContent = formatCurrency(nominal);
+                document.getElementById('previewBesar').textContent = vouchers.besar;
+                document.getElementById('previewSedang').textContent = vouchers.sedang;
+                document.getElementById('nominalPreview').classList.remove('hidden');
+            } else {
+                document.getElementById('nominalPreview').classList.add('hidden');
+            }
+        });
+
+        // Form submit
+        document.getElementById('transactionForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
             const noTransaksi = document.getElementById('noTransaksi').value.trim();
-            const kodeKupon = document.getElementById('kodeKupon').value.trim().toUpperCase();
+            const nominal = parseInt(document.getElementById('nominal').value);
 
-            if (!noTransaksi || !kodeKupon) {
+            if (!noTransaksi || !nominal) {
                 Utils.error('Mohon isi semua data');
                 return;
             }
 
-            // Find transaction by no_transaksi AND kode_kupon
-            const transaction = DB.getAll('transactions').find(t =>
-                t.no_transaksi === noTransaksi && t.kode_kupon === kodeKupon
+            if (nominal < 100000) {
+                Utils.error('Nominal minimal Rp 100.000 untuk mendapat kupon');
+                return;
+            }
+
+            // Check duplicate per toko
+            const allTransactions = DB.getAll('transactions');
+            const existingInStore = allTransactions.find(t =>
+                t.no_transaksi === noTransaksi &&
+                t.toko_name === session.toko_name
             );
-
-            if (!transaction) {
-                Utils.error('Kode kupon tidak valid atau tidak ditemukan');
+            if (existingInStore) {
+                Utils.error('No Transaksi sudah digunakan di toko ini');
                 return;
             }
 
-            if (transaction.is_claimed) {
-                Utils.error('Kupon ini sudah diklaim sebelumnya');
-                // Redirect to check voucher with transaction info
-                setTimeout(() => {
-                    window.location.href = `cek-voucher.html?trx=${encodeURIComponent(noTransaksi)}`;
-                }, 1500);
-                return;
+            // Generate coupon code
+            const kodeKupon = Utils.generateKuponCode(session.toko_name);
+
+            // Save transaction
+            const transaction = DB.insert('transactions', {
+                toko_name: session.toko_name,
+                no_transaksi: noTransaksi,
+                nominal: nominal,
+                kode_kupon: kodeKupon,
+                is_claimed: false
+            });
+
+            lastTransaction = transaction;
+
+            // Generate claim URL
+            const baseUrl = window.location.origin + window.location.pathname.replace('/kasir/index.html', '');
+            const claimUrl = `${baseUrl}/index.html`;
+
+            // Update receipt display
+            const vouchers = Utils.hitungVoucher(nominal);
+            document.getElementById('receiptToko').textContent = session.toko_name;
+            document.getElementById('receiptNoTrans').textContent = noTransaksi;
+            document.getElementById('receiptKodeKupon').textContent = kodeKupon;
+            document.getElementById('receiptQR').src = Utils.getQRCodeUrl(claimUrl, 160);
+            document.getElementById('receiptUrl').textContent = claimUrl;
+            document.getElementById('receiptUrl').href = claimUrl;
+            document.getElementById('receiptHadiah').textContent = `${vouchers.besar} Besar, ${vouchers.sedang} Sedang`;
+            document.getElementById('receiptNominal').textContent = formatCurrency(nominal);
+
+            // Show receipt section
+            document.getElementById('inputSection').classList.add('hidden');
+            document.getElementById('receiptSection').classList.remove('hidden');
+
+            Utils.success('Kupon berhasil dibuat!');
+        });
+
+        function printReceipt() {
+            if (!lastTransaction) return;
+
+            const baseUrl = window.location.origin + window.location.pathname.replace('/kasir/index.html', '');
+            const claimUrl = `${baseUrl}/index.html`;
+            const vouchers = Utils.hitungVoucher(lastTransaction.nominal);
+            const garisGanda = '================================';
+            const garisTunggal = '--------------------------------';
+
+            const printWindow = window.open('', '_blank', 'width=220,height=600');
+
+            printWindow.document.write(`
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struk 58mm Auto-Cut</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Courier New', monospace; font-size: 11px; background: #fff; color: #000; }
+        .struk-wrapper { width: 58mm; background: #fff; text-align: center; padding-bottom: 5px; margin: 0; }
+        .blok { display: block; margin-bottom: 2px; line-height: 1.2; }
+        .tebal { font-weight: bold; }
+        .besar { font-size: 18px; font-weight: 900; }
+        .sedang { font-size: 13px; font-weight: bold; }
+        .kotak-kupon { border: 2px dashed #000; padding: 5px 3px; margin: 5px 2px; }
+        .mt-5 { margin-top: 5px; }
+        .mb-5 { margin-bottom: 5px; }
+        .link-url { word-break: break-all; font-size: 9px; line-height: 1.1; }
+        .garis { font-weight: bold; white-space: nowrap; overflow: hidden; display: block; margin: 3px 0; letter-spacing: -1px; }
+        img { -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; image-rendering: pixelated; }
+        @media print {
+            @page { size: 58mm auto; margin: 0mm; }
+            html, body { width: 58mm; height: auto !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; }
+            .struk-wrapper { width: 100%; page-break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="struk-wrapper">
+        <div class="blok tebal mt-5">TOKO: ${session.toko_name}</div>
+        <div class="kotak-kupon">
+            <div class="blok sedang">No Trans:</div>
+            <div class="blok besar">${lastTransaction.no_transaksi}</div>
+            <div class="garis">${garisTunggal}</div>
+            <div class="blok" style="font-size: 10px;">KODE KUPON ANDA:</div>
+            <div class="blok besar" style="font-size: 16px;">${lastTransaction.kode_kupon}</div>
+        </div>
+        <div class="garis">${garisGanda}</div>
+        <div class="blok mb-5" style="text-align: center;">
+            <img id="qrImage" src="${Utils.getQRCodeUrl(claimUrl, 150)}" width="120" height="120" alt="QR Code">
+        </div>
+        <div class="blok">Scan QR atau buka:</div>
+        <div class="blok link-url mb-5">${claimUrl}</div>
+        <div class="garis">${garisTunggal}</div>
+        <div class="blok">Masukkan kode di atas<br>untuk klaim hadiah.</div>
+        <div class="garis">${garisTunggal}</div>
+        <div class="blok">Hadiah: ${vouchers.besar} Besar, ${vouchers.sedang} Sedang</div>
+        <div class="blok tebal" style="font-size: 13px;">${formatCurrency(lastTransaction.nominal)}</div>
+        <div style="height: 5px;">.</div>
+    </div>
+    <` + `script>
+        var qrImg = document.getElementById('qrImage');
+        var printTriggered = false;
+        function executePrint() {
+            if (printTriggered) return;
+            printTriggered = true;
+            setTimeout(function() { window.print(); window.close(); }, 500);
+        }
+        function checkAndPrint() {
+            if (qrImg.complete && qrImg.naturalWidth > 0) { executePrint(); }
+            else { qrImg.onload = function() { if (qrImg.naturalWidth > 0) executePrint(); }; qrImg.onerror = executePrint; }
+        }
+        if (document.readyState === 'complete') { checkAndPrint(); } else { window.addEventListener('load', checkAndPrint); }
+    <` + `/script>
+</body>
+</html>
+            `);
+
+            printWindow.document.close();
+        }
+
+        function newTransaction() {
+            document.getElementById('transactionForm').reset();
+            document.getElementById('nominalPreview').classList.add('hidden');
+            document.getElementById('inputSection').classList.remove('hidden');
+            document.getElementById('receiptSection').classList.add('hidden');
+            lastTransaction = null;
+        }
+
+        function logout() {
+            DB.logoutKasir();
+            window.location.href = 'login.html';
+        }
+
+        // ========== SECURITY: Idle Timeout Auto-Logout (10 menit) ==========
+        let idleTimer;
+        const IDLE_TIMEOUT = 10 * 60 * 1000;
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(autoLogout, IDLE_TIMEOUT);
+        }
+
+        function autoLogout() {
+            alert('Sesi Anda telah habis karena tidak aktif selama 10 menit.\nSilakan login kembali.');
+            DB.logoutKasir();
+            window.location.href = 'login.html';
+        }
+
+        ['click', 'keypress', 'mousemove', 'scroll', 'touchstart'].forEach(eventType => {
+            document.addEventListener(eventType, resetIdleTimer, { passive: true });
+        });
+
+        resetIdleTimer();
+
+        // ========== SECURITY: Force Reload on Back Button ==========
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                window.location.reload();
             }
-
-            // Valid! Save to session and redirect to claim page
-            sessionStorage.setItem('pendingClaim', JSON.stringify({
-                transactionId: transaction.id,
-                noTransaksi: transaction.no_transaksi,
-                kodeKupon: transaction.kode_kupon,
-                nominal: transaction.nominal,
-                tokoName: transaction.toko_name
-            }));
-
-            Utils.success('Kupon valid! Mengalihkan...');
-            setTimeout(() => {
-                window.location.href = 'claim.html';
-            }, 1000);
-        });
-
-        // Auto uppercase for coupon code
-        document.getElementById('kodeKupon').addEventListener('input', function () {
-            this.value = this.value.toUpperCase();
-        });
+        };
     </script>
 </body>
 

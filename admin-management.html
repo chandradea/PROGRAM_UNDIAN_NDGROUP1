@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Vanguard Admin Management Interface - Kelola Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f98006",
+                        "background-light": "#f5f5f5",
+                        "background-dark": "#0a0a0a",
+                        "card-dark": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .inner-glow-orange {
+                box-shadow: inset 0 0 15px rgba(249, 128, 6, 0.05);
+            }
+            .orange-glow-pip {
+                box-shadow: 0 0 12px rgba(249, 128, 6, 0.9);
+            }
+            .metallic-gradient {
+                background: linear-gradient(135deg, #f98006 0%, #ffcc33 50%, #f98006 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .orange-laser-line {
+                box-shadow: 0 0 8px rgba(249, 128, 6, 0.4);
+            }
+            .sidebar-item-active {
+                @apply bg-primary/10 border-r-2 border-primary text-gray-900;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .clock-glow {
+                text-shadow: 0 0 10px rgba(249, 128, 6, 0.6), 0 0 20px rgba(249, 128, 6, 0.2);
+            }
+            .admin-table-border {
+                border: 1px solid rgba(249, 128, 6, 0.2);
+            }
+            .btn-gradient {
+                background: linear-gradient(90deg, #f98006 0%, #ffcc33 100%);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light font-display text-gray-900 transition-colors duration-300 antialiased overflow-hidden">
+    <div class="flex h-screen w-full">
+        <!-- Sidebar -->
+        <aside class="w-72 border-r border-primary/30 bg-white/90 backdrop-blur-xl flex flex-col z-50 shadow-lg">
+            <div class="p-8">
+                <div class="flex items-center gap-3">
+                    <div class="size-8 flex items-center justify-center">
+                        <svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f98006;stop-opacity:1"></stop>
+                                    <stop offset="100%" style="stop-color:#ffcc33;stop-opacity:1"></stop>
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                                fill="url(#logoGrad)"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-extrabold tracking-tighter metallic-gradient">ND GROUP</h2>
+                </div>
+                <p class="mt-2 text-[10px] text-gray-600 uppercase tracking-[0.4em] font-bold">Vanguard V2</p>
+            </div>
+
+            <nav class="flex-1 px-4 space-y-2 mt-4">
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="index.html">
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">dashboard_customize</span>
+                    Dashboard
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-bold tracking-widest uppercase transition-all sidebar-item-active group"
+                    href="admin-management.html">
+                    <span
+                        class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">admin_panel_settings</span>
+                    Kelola Admin
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="kasir.html">
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">point_of_sale</span>
+                    Kelola Kasir
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="kupon.html">
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">confirmation_number</span>
+                    Kelola Kupon
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="voucher.html">
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">loyalty</span>
+                    Kelola Voucher
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="export.html">
+                    <span
+                        class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">download</span>
+                    Export Data
+                </a>
+            </nav>
+
+            <div class="p-6 border-t border-gray-200 space-y-4">
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-gray-700 ml-1">Terminal Auth
+                        Level</label>
+                    <div id="authLevel"
+                        class="bg-primary/5 border border-primary/20 rounded px-3 py-2 text-[10px] font-bold text-primary uppercase tracking-widest">
+                        Level 4: Admin
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <button onclick="exportLogs()"
+                        class="w-full flex items-center justify-between gap-3 px-4 py-3 rounded border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all group overflow-hidden relative">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-primary">System Logs</span>
+                        <span
+                            class="material-symbols-outlined text-lg text-primary orange-glow-pip rounded-full p-1 bg-primary/20">terminal</span>
+                    </button>
+                </div>
+                <button onclick="logout()"
+                    class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 transition-all text-red-400 hover:text-red-300">
+                    <span class="material-symbols-outlined text-sm">logout</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto scrollbar-hide flex flex-col">
+            <!-- Header -->
+            <header
+                class="sticky top-0 z-40 flex items-center justify-between border-b border-gray-200 bg-white/90 px-10 py-5 backdrop-blur-md shadow-sm">
+                <div class="flex items-center gap-8">
+                    <h1 class="text-2xl font-black italic tracking-tighter uppercase text-gray-900">Vanguard<span
+                            class="text-primary not-italic font-light ml-2">Terminal</span></h1>
+                    <div class="h-6 w-px bg-gray-300"></div>
+                    <div class="flex items-center gap-8">
+                        <div class="flex items-center gap-3">
+                            <span class="h-2 w-2 rounded-full bg-primary animate-ping"></span>
+                            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-700">System Link:
+                                Stable</span>
+                        </div>
+                        <div class="flex flex-col border-l border-primary/20 pl-8">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[8px] font-black uppercase tracking-[0.3em] text-gray-600">Mission
+                                    Time</span>
+                                <div class="h-[1px] w-4 bg-primary/30"></div>
+                            </div>
+                            <div class="flex items-baseline gap-2 font-mono clock-glow">
+                                <span class="text-xl font-bold text-primary tracking-wider"
+                                    id="vanguard-clock">00:00:00</span>
+                                <span class="text-[10px] font-bold text-primary/80 uppercase tracking-widest"
+                                    id="vanguard-date">--- -- ----</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="relative">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
+                        <input id="adminSearch"
+                            class="w-64 rounded bg-gray-100 border border-gray-300 py-2 pl-10 pr-4 text-[10px] tracking-widest uppercase text-gray-900 focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+                            placeholder="ADMIN SEARCH..." type="text" />
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="securityBtn"
+                            class="flex size-9 items-center justify-center rounded border border-gray-300 bg-gray-100 text-gray-600 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">security</span>
+                        </button>
+                        <button id="hubBtn"
+                            class="flex size-9 items-center justify-center rounded border border-gray-300 bg-gray-100 text-gray-600 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">hub</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3 pl-4 border-l border-gray-300">
+                        <div class="text-right">
+                            <p class="text-[10px] font-bold text-gray-900 tracking-widest uppercase"
+                                id="headerUserName">
+                                Admin</p>
+                            <p class="text-[9px] text-primary uppercase font-bold tracking-tighter">Level 4 Access</p>
+                        </div>
+                        <div
+                            class="h-10 w-10 rounded-full border border-primary/40 p-0.5 bg-primary/20 flex items-center justify-center">
+                            <span class="text-primary font-bold text-sm" id="headerUserAvatar">A</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-10 space-y-8">
+                <!-- Page Title Section -->
+                <div class="flex items-end justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="h-[1px] w-8 bg-primary"></div>
+                            <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary">Administration
+                                Module</span>
+                        </div>
+                        <h2 class="text-4xl font-black uppercase tracking-tight italic">User Command <span
+                                class="text-primary not-italic">Center</span></h2>
+                    </div>
+                    <button onclick="openAddModal()"
+                        class="btn-gradient text-black px-6 py-3 rounded flex items-center gap-3 font-black text-[11px] uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_20px_rgba(249,128,6,0.3)]">
+                        <span class="material-symbols-outlined font-bold">person_add</span>
+                        Add New Admin
+                    </button>
+                </div>
+
+                <!-- Admin Table -->
+                <div class="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+                    <div class="grid grid-cols-12 border-b border-gray-200 bg-gray-50 py-4 px-8">
+                        <div class="col-span-4 text-[10px] font-black uppercase tracking-[0.3em] text-gray-700">
+                            Personnel Identification</div>
+                        <div class="col-span-3 text-[10px] font-black uppercase tracking-[0.3em] text-gray-700">System
+                            Role</div>
+                        <div class="col-span-3 text-[10px] font-black uppercase tracking-[0.3em] text-gray-700">Last
+                            Access Sequence</div>
+                        <div
+                            class="col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-700 text-right">
+                            Command Actions</div>
+                    </div>
+                    <div class="divide-y divide-primary/10" id="adminTable">
+                        <div class="py-8 text-center text-slate-500">
+                            <span class="material-symbols-outlined text-4xl text-primary/30 animate-pulse">sync</span>
+                            <p class="mt-2 text-[10px] uppercase tracking-widest">Loading administrators...</p>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+                        <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest" id="adminCount">
+                            Displaying 0 administrators in core registry</p>
+                        <div class="flex gap-2">
+                            <button
+                                class="px-3 py-1 border border-gray-300 text-[10px] uppercase font-bold text-gray-600 hover:text-gray-900 transition-colors">Prev</button>
+                            <button
+                                class="px-3 py-1 border border-primary text-[10px] uppercase font-bold text-primary bg-primary/10">1</button>
+                            <button
+                                class="px-3 py-1 border border-gray-300 text-[10px] uppercase font-bold text-gray-600 hover:text-gray-900 transition-colors">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Panels -->
+                <div class="grid grid-cols-12 gap-8">
+                    <!-- Security Event Log -->
+                    <div class="col-span-7 rounded-xl border border-gray-200 bg-white p-6 shadow-sm flex flex-col">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-2">
+                                <span class="h-2 w-2 rounded-full bg-primary orange-glow-pip animate-pulse"></span>
+                                <h3 class="text-[11px] font-black uppercase tracking-[0.3em] text-gray-900">Security
+                                    Event
+                                    Log</h3>
+                            </div>
+                            <button onclick="exportLogs()"
+                                class="text-[10px] font-bold text-primary uppercase hover:text-primary/80 transition-colors">Export
+                                CSV</button>
+                        </div>
+                        <div class="space-y-4 overflow-y-auto scrollbar-hide max-h-48" id="securityLog">
+                            <div class="p-3 border-l-2 border-primary/40 bg-gray-50 flex gap-4 items-start">
+                                <span class="material-symbols-outlined text-primary text-lg">policy</span>
+                                <div>
+                                    <p class="text-[11px] font-bold text-gray-900 uppercase tracking-wider">System Ready
+                                    </p>
+                                    <p class="text-[10px] text-gray-600 mt-0.5">Admin management module initialized
+                                    </p>
+                                </div>
+                                <span class="text-[8px] text-gray-500 ml-auto font-bold uppercase">Just now</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Link Load -->
+                    <div class="col-span-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-[11px] font-black uppercase tracking-[0.3em] text-gray-900">System Link Load
+                            </h3>
+                            <span class="text-[9px] font-bold text-primary uppercase">Optimized</span>
+                        </div>
+                        <div class="mt-4 h-32 w-full">
+                            <svg class="h-full w-full" preserveAspectRatio="none" viewBox="0 0 400 100">
+                                <path class="orange-laser-line"
+                                    d="M0,80 L40,70 L80,85 L120,60 L160,65 L200,40 L240,55 L280,30 L320,35 L360,10 L400,15"
+                                    fill="none" stroke="#f98006" stroke-width="1"></path>
+                            </svg>
+                        </div>
+                        <div class="flex justify-between mt-4">
+                            <div class="text-center">
+                                <p class="text-[8px] text-slate-500 font-bold uppercase">CPU</p>
+                                <p class="text-xs font-mono font-bold text-primary">12%</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-[8px] text-slate-500 font-bold uppercase">MEM</p>
+                                <p class="text-xs font-mono font-bold text-primary">4.2GB</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-[8px] text-slate-500 font-bold uppercase">IO</p>
+                                <p class="text-xs font-mono font-bold text-primary">LOW</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer
+                    class="rounded border border-primary/20 bg-card-dark/60 p-4 flex items-center justify-between mt-auto">
+                    <div class="flex items-center gap-8">
+                        <div class="flex items-center gap-2">
+                            <span class="h-1.5 w-1.5 rounded-full bg-primary orange-glow-pip"></span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Node:
+                                Admin-Control-Alpha</span>
+                        </div>
+                        <div class="h-4 w-px bg-white/10"></div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Latency:
+                                0.04ms</span>
+                        </div>
+                        <div class="h-4 w-px bg-white/10"></div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Encryption:
+                                AES-256</span>
+                        </div>
+                    </div>
+                    <div class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary/80">
+                        © ND GROUP TERMINAL V2.0.44 • ELITE ENCRYPTED CHANNEL
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modalBackdrop"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300">
+    </div>
+    <div id="adminModal"
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-50 hidden opacity-0 scale-95 transition-all duration-300">
+        <div
+            class="rounded-xl border border-primary/30 bg-card-dark/95 backdrop-blur-xl overflow-hidden inner-glow-orange">
+            <div
+                class="bg-gradient-to-r from-primary/10 via-transparent to-transparent border-b border-primary/20 px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary">person_add</span>
+                    <h3 class="text-[11px] font-black uppercase tracking-[0.3em] text-white" id="modalTitle">Add New
+                        Admin</h3>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <form id="adminForm">
+                    <input type="hidden" id="adminId">
+                    <div class="space-y-4">
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500 ml-1">Full Name
+                                *</label>
+                            <input type="text" id="nama"
+                                class="w-full bg-background-dark/80 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium text-white placeholder:text-slate-700 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
+                                placeholder="e.g. John Doe" required>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500 ml-1">Username
+                                *</label>
+                            <input type="text" id="username"
+                                class="w-full bg-background-dark/80 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium text-white placeholder:text-slate-700 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
+                                placeholder="e.g. johndoe" required>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500 ml-1">Password
+                                *</label>
+                            <input type="password" id="password"
+                                class="w-full bg-background-dark/80 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium text-white placeholder:text-slate-700 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
+                                placeholder="Min 6 characters">
+                            <p class="text-[9px] text-slate-500 ml-1" id="passwordHint">Minimum 6 characters</p>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500 ml-1">Confirm
+                                Password *</label>
+                            <input type="password" id="passwordConfirm"
+                                class="w-full bg-background-dark/80 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium text-white placeholder:text-slate-700 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
+                                placeholder="Re-enter password">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="px-6 py-4 border-t border-primary/10 flex justify-end gap-3">
+                <button onclick="closeModal()"
+                    class="px-5 py-2 border border-white/10 bg-white/5 text-slate-400 hover:text-white hover:border-white/20 transition-all rounded-lg text-[10px] font-bold uppercase tracking-widest">
+                    Cancel
+                </button>
+                <button onclick="saveAdmin()"
+                    class="btn-gradient text-black px-5 py-2 rounded-lg font-black text-[10px] uppercase tracking-widest hover:brightness-110 transition-all">
+                    Save Admin
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
+    <script>
+        // Clock functionality
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            const clockEl = document.getElementById('vanguard-clock');
+            const dateEl = document.getElementById('vanguard-date');
+            if (clockEl) clockEl.textContent = `${hours}:${minutes}:${seconds}`;
+            if (dateEl) dateEl.textContent = `${month} ${day} ${year}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        let editMode = false;
+        let currentSession = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            currentSession = Utils.requireAuth('admin');
+            if (!currentSession) return;
+
+            // Set user info
+            document.getElementById('headerUserName').textContent = currentSession.username;
+            document.getElementById('headerUserAvatar').textContent = currentSession.username.charAt(0).toUpperCase();
+
+            // Set auth level
+            const isSuper = currentSession.is_super === true;
+            document.getElementById('authLevel').textContent = isSuper ? 'Level 5: Super Admin' : 'Level 4: Admin';
+
+            loadAdmins();
+            addSecurityLog('policy', 'Session Initiated', `${currentSession.username} accessed Admin Management`);
+
+            // Setup search
+            document.getElementById('adminSearch').addEventListener('input', Utils.debounce(handleSearch, 300));
+
+            // Setup header buttons
+            document.getElementById('securityBtn').addEventListener('click', function () {
+                addSecurityLog('security', 'Security Check', 'Manual security scan initiated');
+            });
+            document.getElementById('hubBtn').addEventListener('click', function () {
+                addSecurityLog('hub', 'Hub Status', 'All nodes connected and operational');
+            });
+        });
+
+        function loadAdmins(searchQuery = '') {
+            let admins = DB.findBy('users', 'role', 'admin');
+
+            // Filter by search
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                admins = admins.filter(a =>
+                    (a.nama && a.nama.toLowerCase().includes(query)) ||
+                    a.username.toLowerCase().includes(query)
+                );
+            }
+
+            const container = document.getElementById('adminTable');
+            const countEl = document.getElementById('adminCount');
+
+            if (!admins.length) {
+                container.innerHTML = `
+                    <div class="py-8 text-center text-slate-500">
+                        <span class="material-symbols-outlined text-4xl text-primary/30">person_off</span>
+                        <p class="mt-2 text-[10px] uppercase tracking-widest">${searchQuery ? 'No matching administrators found' : 'No administrators in registry'}</p>
+                    </div>
+                `;
+                countEl.textContent = 'No administrators found';
+                return;
+            }
+
+            container.innerHTML = admins.map((admin, index) => {
+                const isSelf = currentSession.id === admin.id;
+                const isSuper = admin.is_super === true;
+                const canDelete = !isSelf && !isSuper;
+                const canEdit = !isSuper;
+                const initial = (admin.nama || admin.username).charAt(0).toUpperCase();
+                const uid = `ND-${String(index + 1).padStart(4, '0')}-${String(Math.floor(Math.random() * 99)).padStart(2, '0')}`;
+
+                return `
+                    <div class="grid grid-cols-12 items-center py-5 px-8 hover:bg-primary/[0.02] transition-colors group">
+                        <div class="col-span-4 flex items-center gap-4">
+                            <div class="size-12 rounded-lg border ${isSuper ? 'border-primary/30' : 'border-white/10'} p-0.5 overflow-hidden bg-primary/10 flex items-center justify-center">
+                                <span class="text-primary font-bold text-lg">${initial}</span>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold uppercase tracking-wider text-white">${admin.nama || admin.username}</h4>
+                                <p class="text-[10px] text-slate-500 font-mono">UID: ${uid}</p>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            ${isSuper ?
+                        '<span class="px-3 py-1 bg-primary/10 border border-primary/30 text-primary text-[9px] font-black uppercase tracking-widest rounded">Super Admin</span>' :
+                        '<span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-400 text-[9px] font-black uppercase tracking-widest rounded">Administrator</span>'
+                    }
+                        </div>
+                        <div class="col-span-3 flex flex-col gap-1">
+                            <div class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full ${isSelf ? 'bg-green-500 orange-glow-pip' : 'bg-slate-600'}"></span>
+                                <span class="text-[11px] font-bold ${isSelf ? 'text-slate-300' : 'text-slate-500'} font-mono uppercase">${isSelf ? 'Online' : 'Offline'}</span>
+                            </div>
+                            <span class="text-[9px] text-slate-500 uppercase font-bold tracking-tighter">${Utils.formatDateShort(admin.created_at)}</span>
+                        </div>
+                        <div class="col-span-2 flex justify-end gap-3">
+                            <button onclick="editAdmin('${admin.id}')" 
+                                class="p-2 border border-primary/20 rounded hover:border-primary/60 hover:bg-primary/5 transition-all group/btn ${!canEdit ? 'opacity-30 cursor-not-allowed' : ''}"
+                                ${!canEdit ? 'disabled title="Super Admin cannot be edited"' : ''}>
+                                <span class="material-symbols-outlined text-primary text-xl ${canEdit ? 'clock-glow' : ''}">edit_square</span>
+                            </button>
+                            <button onclick="deleteAdmin('${admin.id}')" 
+                                class="p-2 border border-red-500/20 rounded hover:border-red-500/60 hover:bg-red-500/5 transition-all group/btn ${!canDelete ? 'opacity-30 cursor-not-allowed' : ''}"
+                                ${!canDelete ? 'disabled' : ''}
+                                title="${isSelf ? 'Cannot delete own account' : (isSuper ? 'Super Admin cannot be deleted' : 'Delete admin')}">
+                                <span class="material-symbols-outlined text-red-500/60 group-hover/btn:text-red-500 text-xl transition-colors">no_accounts</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            countEl.textContent = `Displaying ${admins.length} active administrator${admins.length > 1 ? 's' : ''} in core registry`;
+        }
+
+        function handleSearch(e) {
+            loadAdmins(e.target.value.trim());
+        }
+
+        function openAddModal() {
+            editMode = false;
+            document.getElementById('modalTitle').textContent = 'Add New Admin';
+            document.getElementById('adminForm').reset();
+            document.getElementById('adminId').value = '';
+            document.getElementById('password').required = true;
+            document.getElementById('passwordConfirm').required = true;
+            document.getElementById('passwordHint').textContent = 'Minimum 6 characters';
+            openModal();
+        }
+
+        function editAdmin(id) {
+            const admin = DB.getById('users', id);
+            if (!admin) return;
+
+            if (admin.is_super) {
+                addSecurityLog('error', 'Access Denied', 'Super Admin accounts cannot be modified');
+                return;
+            }
+
+            editMode = true;
+            document.getElementById('modalTitle').textContent = 'Edit Admin';
+            document.getElementById('adminId').value = id;
+            document.getElementById('nama').value = admin.nama || '';
+            document.getElementById('username').value = admin.username;
+            document.getElementById('password').value = '';
+            document.getElementById('passwordConfirm').value = '';
+            document.getElementById('password').required = false;
+            document.getElementById('passwordConfirm').required = false;
+            document.getElementById('passwordHint').textContent = 'Leave empty to keep current password';
+            openModal();
+            addSecurityLog('edit_square', 'Edit Initiated', `Editing admin: ${admin.username}`);
+        }
+
+        function saveAdmin() {
+            const id = document.getElementById('adminId').value;
+            const nama = document.getElementById('nama').value.trim();
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('passwordConfirm').value;
+
+            if (!nama || !username) {
+                addSecurityLog('error', 'Validation Failed', 'Name and username are required');
+                return;
+            }
+
+            if (username.includes(' ')) {
+                addSecurityLog('error', 'Validation Failed', 'Username cannot contain spaces');
+                return;
+            }
+
+            const existing = DB.findOneBy('users', 'username', username);
+            if (existing && existing.id !== id) {
+                addSecurityLog('error', 'Duplicate Entry', 'Username already exists in registry');
+                return;
+            }
+
+            if (editMode) {
+                const data = { nama, username };
+                if (password) {
+                    if (password.length < 6) {
+                        addSecurityLog('error', 'Validation Failed', 'Password must be at least 6 characters');
+                        return;
+                    }
+                    if (password !== passwordConfirm) {
+                        addSecurityLog('error', 'Validation Failed', 'Password confirmation does not match');
+                        return;
+                    }
+                    data.password = DB.hashPassword(password);
+                }
+                DB.update('users', id, data);
+                addSecurityLog('check_circle', 'Admin Updated', `Successfully updated admin: ${username}`, 'green-500');
+            } else {
+                if (!password || password.length < 6) {
+                    addSecurityLog('error', 'Validation Failed', 'Password must be at least 6 characters');
+                    return;
+                }
+                if (password !== passwordConfirm) {
+                    addSecurityLog('error', 'Validation Failed', 'Password confirmation does not match');
+                    return;
+                }
+
+                DB.insert('users', {
+                    nama,
+                    username,
+                    password: DB.hashPassword(password),
+                    role: 'admin',
+                    toko_name: null
+                });
+                addSecurityLog('check_circle', 'Admin Created', `New admin registered: ${username}`, 'green-500');
+            }
+
+            closeModal();
+            loadAdmins();
+        }
+
+        function deleteAdmin(id) {
+            const admin = DB.getById('users', id);
+            if (!admin) return;
+
+            if (currentSession.id === id) {
+                addSecurityLog('error', 'Access Denied', 'Cannot delete your own account');
+                return;
+            }
+
+            if (admin.is_super) {
+                addSecurityLog('error', 'Access Denied', 'Super Admin cannot be deleted');
+                return;
+            }
+
+            if (!confirm(`Confirm deletion of admin "${admin.nama || admin.username}"?`)) return;
+
+            DB.delete('users', id);
+            addSecurityLog('delete', 'Admin Removed', `Deleted admin: ${admin.username}`, 'red-500');
+            loadAdmins();
+        }
+
+        function openModal() {
+            const backdrop = document.getElementById('modalBackdrop');
+            const modal = document.getElementById('adminModal');
+            backdrop.classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                modal.classList.remove('opacity-0', 'scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            const backdrop = document.getElementById('modalBackdrop');
+            const modal = document.getElementById('adminModal');
+            backdrop.classList.add('opacity-0');
+            modal.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                backdrop.classList.add('hidden');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function addSecurityLog(icon, title, message, color = 'primary') {
+            const log = document.getElementById('securityLog');
+            const item = document.createElement('div');
+            item.className = `p-3 border-l-2 border-${color}/40 bg-white/5 flex gap-4 items-start`;
+            item.innerHTML = `
+                <span class="material-symbols-outlined text-${color} text-lg">${icon}</span>
+                <div>
+                    <p class="text-[11px] font-bold text-white uppercase tracking-wider">${title}</p>
+                    <p class="text-[10px] text-slate-500 mt-0.5">${message}</p>
+                </div>
+                <span class="text-[8px] text-slate-600 ml-auto font-bold uppercase">Just now</span>
+            `;
+            log.insertBefore(item, log.firstChild);
+
+            // Keep only last 10 logs
+            while (log.children.length > 10) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
+        function exportLogs() {
+            addSecurityLog('download', 'Export Initiated', 'Security logs export started');
+        }
+
+        function logout() {
+            DB.logout();
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>

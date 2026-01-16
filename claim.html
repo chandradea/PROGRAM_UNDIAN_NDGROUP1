@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="antialiased" lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klaim Voucher - Undian Berhadiah</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#F25C24",
+                        "primary-dark": "#D14513",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#333333",
+                        "text-light": "#1F2937",
+                        "text-dark": "#F3F4F6",
+                        "text-muted-light": "#6B7280",
+                        "text-muted-dark": "#9CA3AF",
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.05)',
+                        'glow': '0 0 20px -5px rgba(242, 92, 36, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .luxury-border-bottom {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .luxury-border-bottom:focus {
+            border-bottom-color: #F25C24;
+            outline: none;
+            box-shadow: 0 1px 0 0 #F25C24;
+        }
+
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%) skewX(-12deg);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-sans min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+
+    <!-- Back Link -->
+    <div class="max-w-3xl mx-auto w-full mb-8 flex items-center">
+        <a href="index.html"
+            class="group flex items-center text-sm font-medium text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+            <span
+                class="material-symbols-outlined mr-2 text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            Kembali
+        </a>
+    </div>
+
+    <!-- Main Card -->
+    <div
+        class="max-w-2xl mx-auto w-full bg-surface-light dark:bg-surface-dark shadow-soft rounded-2xl overflow-hidden border border-border-light dark:border-border-dark transition-colors duration-300">
+
+        <!-- Header Section -->
+        <div
+            class="relative pt-12 pb-10 px-8 text-center border-b border-border-light dark:border-border-dark bg-gradient-to-b from-white to-gray-50 dark:from-surface-dark dark:to-[#252525]">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-primary"></div>
+            <div
+                class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-50 dark:bg-orange-900/20 text-primary mb-6">
+                <span class="material-symbols-outlined text-3xl">celebration</span>
+            </div>
+            <h1 class="text-4xl font-serif font-bold text-text-light dark:text-white mb-3 tracking-tight">
+                Selamat!
+            </h1>
+            <p
+                class="text-text-muted-light dark:text-text-muted-dark text-sm uppercase tracking-widest font-medium mb-8">
+                Anda berhak mendapatkan hadiah berikut
+            </p>
+            <div class="flex justify-center gap-12 sm:gap-16 items-start mt-6">
+                <div class="flex flex-col items-center group cursor-default">
+                    <span id="countBesar"
+                        class="text-5xl font-serif font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">0</span>
+                    <span
+                        class="text-xs font-medium uppercase tracking-wide text-text-muted-light dark:text-text-muted-dark border-t border-transparent group-hover:border-primary pt-2 transition-all">Voucher
+                        Besar</span>
+                </div>
+                <div class="w-px h-16 bg-gray-200 dark:bg-gray-700"></div>
+                <div class="flex flex-col items-center group cursor-default">
+                    <span id="countSedang"
+                        class="text-5xl font-serif font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">0</span>
+                    <span
+                        class="text-xs font-medium uppercase tracking-wide text-text-muted-light dark:text-text-muted-dark border-t border-transparent group-hover:border-primary pt-2 transition-all">Voucher
+                        Sedang</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="p-8 sm:p-12">
+            <!-- Transaction Info Box -->
+            <div class="mb-10 p-6 bg-gray-50 dark:bg-[#252525] rounded-xl border border-gray-100 dark:border-gray-800">
+                <div class="flex items-center mb-4">
+                    <span class="material-symbols-outlined text-primary mr-3">assignment</span>
+                    <h2 class="text-lg font-serif font-bold text-text-light dark:text-white">Lengkapi Data Diri</h2>
+                </div>
+                <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-6 font-light">
+                    Isi data berikut untuk mengaktifkan voucher Anda.
+                </p>
+                <div class="space-y-3">
+                    <div
+                        class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-700 pb-2 border-dashed">
+                        <span class="text-text-muted-light dark:text-text-muted-dark">No Transaksi</span>
+                        <span id="infoNoTrx" class="font-mono font-medium text-text-light dark:text-text-dark">-</span>
+                    </div>
+                    <div
+                        class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-700 pb-2 border-dashed">
+                        <span class="text-text-muted-light dark:text-text-muted-dark">Kode Kupon</span>
+                        <span id="infoKupon" class="font-mono font-medium text-text-light dark:text-text-dark">-</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm pb-2">
+                        <span class="text-text-muted-light dark:text-text-muted-dark">Nominal Belanja</span>
+                        <span id="infoNominal" class="font-mono font-bold text-primary">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Form -->
+            <form id="dataForm" class="space-y-8">
+                <div class="grid grid-cols-1 gap-y-8 gap-x-8 sm:grid-cols-2">
+                    <!-- Nama Lengkap -->
+                    <div class="col-span-2">
+                        <label
+                            class="block text-xs font-semibold uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark mb-1"
+                            for="nama">
+                            Nama Lengkap <span class="text-primary">*</span>
+                        </label>
+                        <input type="text" id="nama" name="nama" required
+                            class="block w-full border-0 border-b-2 border-gray-200 dark:border-gray-700 bg-transparent py-3 px-0 text-text-light dark:text-text-dark placeholder-gray-400 focus:ring-0 luxury-border-bottom sm:text-sm"
+                            placeholder="Masukkan nama lengkap sesuai KTP">
+                    </div>
+
+                    <!-- NIK -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label
+                            class="block text-xs font-semibold uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark mb-1"
+                            for="nik">
+                            NIK (16 Digit) <span class="text-primary">*</span>
+                        </label>
+                        <input type="text" id="nik" name="nik" maxlength="16" required
+                            class="block w-full border-0 border-b-2 border-gray-200 dark:border-gray-700 bg-transparent py-3 px-0 text-text-light dark:text-text-dark placeholder-gray-400 focus:ring-0 luxury-border-bottom sm:text-sm"
+                            placeholder="cth: 3201...">
+                        <p class="mt-2 text-[10px] text-text-muted-light dark:text-text-muted-dark italic">
+                            *Digunakan untuk verifikasi
+                        </p>
+                    </div>
+
+                    <!-- No HP -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label
+                            class="block text-xs font-semibold uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark mb-1"
+                            for="noHp">
+                            No HP <span class="text-primary">*</span>
+                        </label>
+                        <input type="tel" id="noHp" name="noHp" required
+                            class="block w-full border-0 border-b-2 border-gray-200 dark:border-gray-700 bg-transparent py-3 px-0 text-text-light dark:text-text-dark placeholder-gray-400 focus:ring-0 luxury-border-bottom sm:text-sm"
+                            placeholder="08xxxxxxxxxx">
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="col-span-2">
+                        <label
+                            class="block text-xs font-semibold uppercase tracking-wider text-text-muted-light dark:text-text-muted-dark mb-1"
+                            for="alamat">
+                            Alamat Lengkap <span class="text-primary">*</span>
+                        </label>
+                        <textarea id="alamat" name="alamat" rows="2" required
+                            class="block w-full border-0 border-b-2 border-gray-200 dark:border-gray-700 bg-transparent py-3 px-0 text-text-light dark:text-text-dark placeholder-gray-400 focus:ring-0 luxury-border-bottom sm:text-sm resize-none"
+                            placeholder="Masukkan alamat domisili saat ini"></textarea>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-6">
+                    <button type="submit"
+                        class="group relative w-full flex justify-center items-center py-4 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-orange-500/30 transition-all duration-300 overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:animate-[shimmer_1s_infinite]">
+                        </div>
+                        <span class="material-symbols-outlined mr-2">redeem</span>
+                        Aktifkan Voucher
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Bottom Decoration -->
+        <div
+            class="h-2 bg-gray-50 dark:bg-[#252525] border-t border-gray-100 dark:border-gray-800 flex justify-center items-center">
+            <div class="w-16 h-1 rounded-full bg-gray-200 dark:bg-gray-700 mt-[-2px]"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-8 text-center text-xs text-text-muted-light dark:text-text-muted-dark opacity-60">
+        © 2024 ND GROUP. All rights reserved.
+    </div>
+
+    <script src="js/database.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        let claimData = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get pending claim data
+            const pending = sessionStorage.getItem('pendingClaim');
+            if (!pending) {
+                Utils.error('Tidak ada data klaim. Silakan mulai dari awal.');
+                setTimeout(() => window.location.href = 'index.html', 1500);
+                return;
+            }
+
+            claimData = JSON.parse(pending);
+
+            // Calculate vouchers
+            const vouchers = Utils.hitungVoucher(claimData.nominal);
+
+            // Display info
+            document.getElementById('countBesar').textContent = vouchers.besar;
+            document.getElementById('countSedang').textContent = vouchers.sedang;
+            document.getElementById('infoNoTrx').textContent = claimData.noTransaksi;
+            document.getElementById('infoKupon').textContent = claimData.kodeKupon;
+            document.getElementById('infoNominal').textContent = Utils.formatCurrency(claimData.nominal);
+        });
+
+        document.getElementById('dataForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nama = document.getElementById('nama').value.trim();
+            const nik = document.getElementById('nik').value.trim();
+            const noHp = document.getElementById('noHp').value.trim();
+            const alamat = document.getElementById('alamat').value.trim();
+
+            // Validations
+            if (!Utils.validateNIK(nik)) {
+                Utils.error('NIK harus 16 digit angka');
+                return;
+            }
+
+            if (!Utils.validatePhone(noHp)) {
+                Utils.error('Format nomor HP tidak valid');
+                return;
+            }
+
+            // Check if NIK already exists
+            let customer = DB.findOneBy('customers', 'nik', nik);
+
+            if (!customer) {
+                // Create new customer
+                customer = DB.insert('customers', { nik, nama, no_telepon: noHp, alamat });
+            } else {
+                // Update existing customer
+                DB.update('customers', customer.id, { nama, no_telepon: noHp, alamat });
+            }
+
+            // Generate vouchers
+            const vouchers = Utils.hitungVoucher(claimData.nominal);
+            const generatedVouchers = [];
+
+            // Generate BESAR vouchers
+            for (let i = 0; i < vouchers.besar; i++) {
+                const v = DB.insert('vouchers', {
+                    transaction_id: claimData.transactionId,
+                    customer_id: customer.id,
+                    kode_voucher: Utils.generateVoucherCode(claimData.tokoName, 'BESAR'),
+                    tipe_hadiah: 'BESAR',
+                    status: 'active',
+                    toko_name: claimData.tokoName
+                });
+                generatedVouchers.push(v);
+            }
+
+            // Generate SEDANG vouchers
+            for (let i = 0; i < vouchers.sedang; i++) {
+                const v = DB.insert('vouchers', {
+                    transaction_id: claimData.transactionId,
+                    customer_id: customer.id,
+                    kode_voucher: Utils.generateVoucherCode(claimData.tokoName, 'SEDANG'),
+                    tipe_hadiah: 'SEDANG',
+                    status: 'active',
+                    toko_name: claimData.tokoName
+                });
+                generatedVouchers.push(v);
+            }
+
+            // Mark transaction as claimed
+            DB.update('transactions', claimData.transactionId, { is_claimed: true });
+
+            // Save voucher IDs for display
+            sessionStorage.setItem('claimedVouchers', JSON.stringify(generatedVouchers.map(v => v.id)));
+            sessionStorage.setItem('customerNIK', nik);
+            sessionStorage.removeItem('pendingClaim');
+
+            Utils.success('Voucher berhasil diaktifkan!');
+            setTimeout(() => window.location.href = 'voucher.html', 1000);
+        });
+
+        // NIK input: numbers only
+        document.getElementById('nik').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
+</body>
+
+</html>

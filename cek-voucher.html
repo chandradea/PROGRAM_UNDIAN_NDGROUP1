@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Voucher Saya - Undian Berhadiah</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#F35429",
+                        "primary-hover": "#D6421B",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#18181B",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#27272A",
+                    },
+                    fontFamily: {
+                        display: ["'Plus Jakarta Sans'", "sans-serif"],
+                        mono: ["'Space Grotesk'", "monospace"],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 40px -8px rgba(0, 0, 0, 0.04)',
+                        'glow': '0 0 15px rgba(243, 84, 41, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .code-font {
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4">
+    <!-- Background Decorations -->
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-40 dark:opacity-10 overflow-hidden">
+        <div class="absolute -top-[20%] -right-[10%] w-[500px] h-[500px] bg-orange-100 rounded-full blur-[100px]"></div>
+        <div class="absolute top-[40%] -left-[10%] w-[400px] h-[400px] bg-gray-100 rounded-full blur-[80px]"></div>
+    </div>
+
+    <main class="w-full max-w-xl mx-auto flex flex-col items-center">
+        <!-- Header -->
+        <div class="text-center mb-10 space-y-4">
+            <div
+                class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 text-primary mb-2 shadow-sm ring-1 ring-orange-100 dark:ring-orange-900/30">
+                <span class="material-symbols-outlined text-3xl">search</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+                Cek Voucher Saya
+            </h1>
+            <p class="text-gray-500 dark:text-gray-400 text-base font-medium max-w-sm mx-auto">
+                Masukkan NIK untuk melihat semua voucher Anda
+            </p>
+        </div>
+
+        <!-- Search Card -->
+        <div
+            class="w-full bg-card-light dark:bg-card-dark rounded-3xl shadow-soft dark:shadow-none border border-gray-100 dark:border-zinc-700/50 p-8 md:p-10 relative overflow-hidden">
+            <div
+                class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50">
+            </div>
+            <form id="searchForm" class="space-y-6">
+                <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-200 ml-1" for="nikInput">
+                        NIK (16 digit)
+                    </label>
+                    <div class="relative group">
+                        <input type="text" id="nikInput" name="nik" maxlength="16" required
+                            class="block w-full px-5 py-4 bg-gray-50 dark:bg-zinc-900/50 border border-gray-200 dark:border-zinc-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300"
+                            placeholder="Masukkan NIK Anda">
+                        <div
+                            class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">badge</span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit"
+                    class="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-4 rounded-xl shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 group">
+                    <span>Cari Voucher</span>
+                    <span
+                        class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="hidden w-full mt-8 space-y-6">
+            <!-- Customer Info -->
+            <div id="customerInfo"
+                class="w-full bg-card-light dark:bg-card-dark rounded-2xl shadow-soft border border-gray-100 dark:border-zinc-700/50 p-6">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="material-symbols-outlined text-primary text-xl">person</span>
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Data Pemilik</span>
+                </div>
+                <p id="customerName" class="text-xl font-bold text-gray-900 dark:text-white ml-8">-</p>
+            </div>
+
+            <!-- Voucher Count -->
+            <div class="flex items-center justify-between px-2">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Daftar Voucher</h3>
+                <span id="resultsCount" class="text-sm text-gray-500 dark:text-gray-400">0 voucher</span>
+            </div>
+
+            <!-- Voucher List -->
+            <div id="voucherList" class="w-full space-y-4">
+                <!-- Vouchers will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState"
+            class="hidden w-full mt-8 bg-card-light dark:bg-card-dark rounded-3xl shadow-soft border border-gray-100 dark:border-zinc-700/50 p-12 text-center">
+            <div
+                class="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-zinc-800 rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-3xl text-gray-400">inbox</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Tidak Ada Voucher</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-6">NIK ini belum memiliki voucher terdaftar.</p>
+            <a href="index.html"
+                class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white font-semibold py-3 px-6 rounded-full shadow-lg shadow-orange-500/20 transition-all">
+                <span class="material-symbols-outlined text-sm">add</span>
+                Klaim Voucher Sekarang
+            </a>
+        </div>
+
+        <!-- Back Link -->
+        <a href="index.html"
+            class="mt-8 flex items-center gap-2 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors group">
+            <span
+                class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform text-primary/80">arrow_back</span>
+            Kembali ke Beranda
+        </a>
+
+        <!-- Footer -->
+        <p class="mt-12 text-xs text-gray-400 dark:text-gray-600 text-center">
+            © 2024 ND GROUP. All rights reserved.
+        </p>
+    </main>
+
+    <script src="js/database.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        // Check URL params for pre-fill
+        const params = Utils.getUrlParams();
+        if (params.nik) {
+            document.getElementById('nikInput').value = params.nik;
+            searchVouchers(params.nik);
+        }
+
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const nik = document.getElementById('nikInput').value.trim();
+            if (nik.length !== 16) {
+                Utils.error('NIK harus 16 digit');
+                return;
+            }
+            searchVouchers(nik);
+        });
+
+        function searchVouchers(nik) {
+            const customer = DB.findOneBy('customers', 'nik', nik);
+            const resultsSection = document.getElementById('resultsSection');
+            const emptyState = document.getElementById('emptyState');
+            const voucherList = document.getElementById('voucherList');
+
+            if (!customer) {
+                resultsSection.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            // Get vouchers for this customer
+            const vouchers = DB.findBy('vouchers', 'customer_id', customer.id);
+
+            if (!vouchers.length) {
+                resultsSection.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            // Show results
+            emptyState.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+
+            document.getElementById('customerName').textContent = customer.nama;
+            document.getElementById('resultsCount').textContent = `${vouchers.length} voucher`;
+
+            voucherList.innerHTML = '';
+            vouchers.forEach(v => {
+                const transaction = v.transaction_id ? DB.getById('transactions', v.transaction_id) : null;
+                const isBesar = v.tipe_hadiah === 'BESAR';
+                const item = document.createElement('div');
+
+                item.className = `bg-card-light dark:bg-card-dark rounded-xl shadow-soft border-l-[3px] ${isBesar ? 'border-primary' : 'border-gray-300 dark:border-zinc-600'} p-5 hover:shadow-lg transition-all duration-300`;
+
+                item.innerHTML = `
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="${isBesar ? 'bg-orange-100 dark:bg-orange-900/40 text-primary' : 'bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-gray-400'} text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded">
+                                    ${v.tipe_hadiah}
+                                </span>
+                                <span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[10px] font-bold tracking-wide uppercase px-2 py-1 rounded flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                                    ${v.status === 'active' ? 'Aktif' : v.status}
+                                </span>
+                            </div>
+                            <h4 class="code-font ${isBesar ? 'text-lg text-gray-900 dark:text-white' : 'text-base text-gray-700 dark:text-gray-300'} font-bold tracking-tight truncate">
+                                ${v.kode_voucher}
+                            </h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                Toko: ${v.toko_name} ${transaction ? '• ' + Utils.formatDateShort(v.created_at) : ''}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                voucherList.appendChild(item);
+            });
+        }
+
+        // NIK input: numbers only
+        document.getElementById('nikInput').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
+</body>
+
+</html>

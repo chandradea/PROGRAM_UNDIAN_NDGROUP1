@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Vanguard Cashier Management Interface - Kelola Kasir</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f98006",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#0a0a0a",
+                        "card-dark": "#141414",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .shadow-sm {
+                box-shadow: inset 0 0 15px rgba(249, 128, 6, 0.05);
+            }
+            .orange-glow-pip {
+                box-shadow: 0 0 12px rgba(249, 128, 6, 0.9);
+            }
+            .metallic-gradient {
+                background: linear-gradient(135deg, #f98006 0%, #ffcc33 50%, #f98006 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .orange-laser-line {
+                box-shadow: 0 0 8px rgba(249, 128, 6, 0.4);
+            }
+            .sidebar-item-active {
+                @apply bg-primary/10 border-r-2 border-primary text-gray-900;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .clock-glow {
+                text-shadow: 0 0 10px rgba(249, 128, 6, 0.6), 0 0 20px rgba(249, 128, 6, 0.2);
+            }
+            .border border-gray-200 {
+                border: 1px solid rgba(249, 128, 6, 0.2);
+            }
+            .btn-gradient {
+                background: linear-gradient(90deg, #f98006 0%, #ffcc33 100%);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light font-display text-gray-900 transition-colors duration-300 antialiased overflow-hidden">
+    <div class="flex h-screen w-full">
+        <!-- Sidebar -->
+        <aside class="w-72 border-r border-primary/20 bg-white/90 shadow-lg backdrop-blur-xl flex flex-col z-50">
+            <div class="p-8">
+                <div class="flex items-center gap-3">
+                    <div class="size-8 flex items-center justify-center">
+                        <svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f98006;stop-opacity:1"></stop>
+                                    <stop offset="100%" style="stop-color:#ffcc33;stop-opacity:1"></stop>
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                                fill="url(#logoGrad)"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-extrabold tracking-tighter metallic-gradient">ND GROUP</h2>
+                </div>
+                <p class="mt-2 text-[10px] text-gray-600 uppercase tracking-[0.4em] font-bold">Vanguard V2</p>
+            </div>
+
+            <nav class="flex-1 px-4 space-y-2 mt-4">
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="index.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">dashboard_customize</span>
+                    Dashboard
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="admin-management.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">admin_panel_settings</span>
+                    Kelola Admin
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-bold tracking-widest uppercase transition-all sidebar-item-active group"
+                    href="kasir.html">
+                    <span
+                        class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">point_of_sale</span>
+                    Kelola Kasir
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="kupon.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">confirmation_number</span>
+                    Kelola Kupon
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="voucher.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">loyalty</span>
+                    Kelola Voucher
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all group"
+                    href="export.html">
+                    <span
+                        class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">download</span>
+                    Export Data
+                </a>
+            </nav>
+
+            <div class="p-6 border-t border-gray-200 space-y-4">
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-gray-900 ml-1">Terminal Auth
+                        Level</label>
+                    <div id="authLevel"
+                        class="bg-primary/5 border border-primary/20 rounded px-3 py-2 text-[10px] font-bold text-primary uppercase tracking-widest">
+                        Level 4: Admin
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <button onclick="showSystemLogs()"
+                        class="w-full flex items-center justify-between gap-3 px-4 py-3 rounded border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all group overflow-hidden relative">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-primary">System Logs</span>
+                        <span
+                            class="material-symbols-outlined text-lg text-primary orange-glow-pip rounded-full p-1 bg-primary/20">terminal</span>
+                    </button>
+                </div>
+                <button onclick="logout()"
+                    class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 transition-all text-red-400 hover:text-red-300">
+                    <span class="material-symbols-outlined text-sm">logout</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto scrollbar-hide flex flex-col">
+            <!-- Header -->
+            <header
+                class="sticky top-0 z-40 flex items-center justify-between border-b border-gray-200 bg-background-light/80 px-10 py-5 backdrop-blur-md">
+                <div class="flex items-center gap-8">
+                    <h1 class="text-2xl font-black italic tracking-tighter uppercase">Vanguard<span
+                            class="text-primary not-italic font-light ml-2">Terminal</span></h1>
+                    <div class="h-6 w-px bg-white/10"></div>
+                    <div class="flex items-center gap-8">
+                        <div class="flex items-center gap-3">
+                            <span class="h-2 w-2 rounded-full bg-primary animate-ping"></span>
+                            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-900">System Link:
+                                Stable</span>
+                        </div>
+                        <div class="flex flex-col border-l border-primary/20 pl-8">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[8px] font-black uppercase tracking-[0.3em] text-gray-900">Mission
+                                    Time</span>
+                                <div class="h-[1px] w-4 bg-primary/30"></div>
+                            </div>
+                            <div class="flex items-baseline gap-2 font-mono clock-glow">
+                                <span class="text-xl font-bold text-primary tracking-wider"
+                                    id="vanguard-clock">00:00:00</span>
+                                <span class="text-[10px] font-bold text-primary/80 uppercase tracking-widest"
+                                    id="vanguard-date">--- -- ----</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="relative">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm">search</span>
+                        <input id="kasirSearch"
+                            class="w-64 rounded bg-gray-100 border border-gray-300 py-2 pl-10 pr-4 text-[10px] tracking-widest uppercase focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+                            placeholder="CASHIER ID SEARCH..." type="text" />
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="securityBtn"
+                            class="flex size-9 items-center justify-center rounded border border-gray-300 bg-gray-100 text-gray-600 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">security</span>
+                        </button>
+                        <button id="hubBtn"
+                            class="flex size-9 items-center justify-center rounded border border-gray-300 bg-gray-100 text-gray-600 hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">hub</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3 pl-4 border-l border-gray-300">
+                        <div class="text-right">
+                            <p class="text-[10px] font-bold text-gray-900 tracking-widest uppercase" id="headerUserName">
+                                Admin</p>
+                            <p class="text-[9px] text-primary uppercase font-bold tracking-tighter">Level 4 Access</p>
+                        </div>
+                        <div
+                            class="h-10 w-10 rounded-full border border-primary/40 p-0.5 bg-primary/20 flex items-center justify-center">
+                            <span class="text-primary font-bold text-sm" id="headerUserAvatar">A</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-10 space-y-8">
+                <!-- Page Title Section -->
+                <div class="flex items-end justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="h-[1px] w-8 bg-primary"></div>
+                            <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary">Cashier
+                                Management</span>
+                        </div>
+                        <h2 class="text-4xl font-black uppercase tracking-tight italic">Cashier Operational <span
+                                class="text-primary not-italic">Hub</span></h2>
+                    </div>
+                    <button onclick="openAddModal()"
+                        class="btn-gradient text-black px-6 py-3 rounded flex items-center gap-3 font-black text-[11px] uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_20px_rgba(249,128,6,0.3)]">
+                        <span class="material-symbols-outlined font-bold">point_of_sale</span>
+                        Deploy New Cashier
+                    </button>
+                </div>
+
+                <!-- Cashier Table -->
+                <div
+                    class="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden shadow-sm backdrop-blur-sm">
+                    <div class="grid grid-cols-12 border-b border-primary/20 bg-primary/5 py-4 px-8">
+                        <div class="col-span-4 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900">
+                            Station ID & Profile</div>
+                        <div class="col-span-3 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900">
+                            Assigned Store</div>
+                        <div class="col-span-3 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900">
+                            Session Status</div>
+                        <div class="col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 text-right">
+                            Actions</div>
+                    </div>
+                    <div class="divide-y divide-primary/10" id="kasirTable">
+                        <div class="py-8 text-center text-gray-600">
+                            <span class="material-symbols-outlined text-4xl text-primary/30 animate-pulse">sync</span>
+                            <p class="mt-2 text-[10px] uppercase tracking-widest">Loading cashiers...</p>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+                        <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest" id="kasirCount">
+                            Syncing cashier operational status with central server...</p>
+                        <div class="flex gap-2">
+                            <button
+                                class="px-3 py-1 border border-gray-300 text-[10px] uppercase font-bold text-gray-600 hover:text-gray-900 transition-colors">Prev</button>
+                            <button
+                                class="px-3 py-1 border border-primary text-[10px] uppercase font-bold text-primary bg-primary/10">1</button>
+                            <button
+                                class="px-3 py-1 border border-gray-300 text-[10px] uppercase font-bold text-gray-600 hover:text-gray-900 transition-colors">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cashier Performance Chart -->
+                <div class="rounded-xl border border-gray-200 bg-white shadow-sm p-8 shadow-sm flex flex-col">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">monitoring</span>
+                            <div>
+                                <h3 class="text-sm font-black uppercase tracking-[0.3em] text-gray-900">Cashier Performance
+                                </h3>
+                                <p class="text-[9px] text-gray-600 uppercase font-bold tracking-widest">Real-time
+                                    Transaction Volume Monitoring</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-2">
+                                <span class="h-1.5 w-4 bg-primary rounded-full"></span>
+                                <span class="text-[9px] text-gray-600 font-bold uppercase">Today</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="h-1.5 w-4 bg-slate-700 rounded-full"></span>
+                                <span class="text-[9px] text-gray-600 font-bold uppercase">Baseline</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-48 w-full relative">
+                        <svg class="h-full w-full" preserveAspectRatio="none" viewBox="0 0 1000 150">
+                            <path
+                                d="M0,120 L100,110 L200,125 L300,100 L400,105 L500,80 L600,95 L700,70 L800,75 L900,50 L1000,55"
+                                fill="none" stroke="#334155" stroke-dasharray="4" stroke-width="1"></path>
+                            <path class="orange-laser-line"
+                                d="M0,130 L100,125 L200,90 L300,95 L400,40 L500,60 L600,20 L700,55 L800,35 L900,15 L1000,10"
+                                fill="none" stroke="#f98006" stroke-width="2"></path>
+                            <path
+                                d="M0,130 L100,125 L200,90 L300,95 L400,40 L500,60 L600,20 L700,55 L800,35 L900,15 L1000,10"
+                                fill="none" stroke="rgba(249, 128, 6, 0.2)" stroke-width="8"></path>
+                        </svg>
+                        <div class="absolute inset-0 flex justify-between items-end pointer-events-none px-1">
+                            <span class="text-[8px] text-gray-500 font-mono">08:00</span>
+                            <span class="text-[8px] text-gray-500 font-mono">10:00</span>
+                            <span class="text-[8px] text-gray-500 font-mono">12:00</span>
+                            <span class="text-[8px] text-gray-500 font-mono">14:00</span>
+                            <span class="text-[8px] text-gray-500 font-mono">16:00</span>
+                            <span class="text-[8px] text-gray-500 font-mono">18:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer
+                    class="rounded border border-primary/20 bg-white/90 shadow-lg p-4 flex items-center justify-between mt-auto">
+                    <div class="flex items-center gap-8">
+                        <div class="flex items-center gap-2">
+                            <span class="h-1.5 w-1.5 rounded-full bg-primary orange-glow-pip"></span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-600">Node:
+                                Operational-HQ-01</span>
+                        </div>
+                        <div class="h-4 w-px bg-white/10"></div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-600">Network:
+                                Secure Vanguard Mesh</span>
+                        </div>
+                        <div class="h-4 w-px bg-white/10"></div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-600">Uptime:
+                                99.998%</span>
+                        </div>
+                    </div>
+                    <div class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary/80">
+                        © ND GROUP TERMINAL V2.0.44 • ELITE ENCRYPTED CHANNEL
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modalBackdrop"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300">
+    </div>
+    <div id="kasirModal"
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-50 hidden opacity-0 scale-95 transition-all duration-300">
+        <div
+            class="rounded-xl border border-primary/30 bg-white/95 backdrop-blur-xl overflow-hidden shadow-sm">
+            <div
+                class="bg-gradient-to-r from-primary/10 via-transparent to-transparent border-b border-primary/20 px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary">point_of_sale</span>
+                    <h3 class="text-[11px] font-black uppercase tracking-[0.3em] text-gray-900" id="modalTitle">Deploy New
+                        Cashier</h3>
+                </div>
+                <button onclick="closeModal()" class="text-gray-600 hover:text-gray-900 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <form id="kasirForm">
+                    <input type="hidden" id="kasirId">
+                    <div class="space-y-4">
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-bold uppercase tracking-widest text-gray-600 ml-1">Station
+                                Username *</label>
+                            <input type="text" id="username"
+                                class="w-full bg-background-light/80 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium text-gray-900 placeholder:text-slate-700 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
+                                placeholder="e.g. kasir01" required>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-bold uppercase tracking-widest text-gray-600 ml-1">Access
+                                Password *</label>
+                            <input type="password" id="password"
+                                class="w-full bg-background-light/80 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium text-gray-900 placeholder:text-slate-700 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
+                                placeholder="Min 6 characters">
+                            <p class="text-[9px] text-gray-600 ml-1" id="passwordHint">Minimum 6 characters</p>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-bold uppercase tracking-widest text-gray-600 ml-1">Assigned
+                                Store *</label>
+                            <input type="text" id="tokoName"
+                                class="w-full bg-background-light/80 border border-primary/30 rounded-lg py-3 px-4 text-sm font-medium text-gray-900 placeholder:text-slate-700 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
+                                placeholder="e.g. ND1, ND2, MAIN PLAZA" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
+                <button onclick="closeModal()"
+                    class="px-5 py-2 border border-gray-300 bg-gray-100 text-gray-600 hover:text-gray-900 hover:border-white/20 transition-all rounded-lg text-[10px] font-bold uppercase tracking-widest">
+                    Cancel
+                </button>
+                <button onclick="saveKasir()"
+                    class="btn-gradient text-black px-5 py-2 rounded-lg font-black text-[10px] uppercase tracking-widest hover:brightness-110 transition-all">
+                    Deploy Cashier
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/database.js"></script>
+    <script src="../js/utils.js"></script>
+    <script>
+        // Clock functionality
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            const clockEl = document.getElementById('vanguard-clock');
+            const dateEl = document.getElementById('vanguard-date');
+            if (clockEl) clockEl.textContent = `${hours}:${minutes}:${seconds}`;
+            if (dateEl) dateEl.textContent = `${month} ${day} ${year}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        let editMode = false;
+        let currentSession = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            currentSession = Utils.requireAuth('admin');
+            if (!currentSession) return;
+
+            // Set user info
+            document.getElementById('headerUserName').textContent = currentSession.username;
+            document.getElementById('headerUserAvatar').textContent = currentSession.username.charAt(0).toUpperCase();
+
+            // Set auth level
+            const isSuper = currentSession.is_super === true;
+            document.getElementById('authLevel').textContent = isSuper ? 'Level 5: Super Admin' : 'Level 4: Admin';
+
+            loadKasir();
+
+            // Setup search
+            document.getElementById('kasirSearch').addEventListener('input', Utils.debounce(handleSearch, 300));
+
+            // Setup header buttons
+            document.getElementById('securityBtn').addEventListener('click', function () {
+                alert('Security status: All systems secure');
+            });
+            document.getElementById('hubBtn').addEventListener('click', function () {
+                alert('Hub status: All nodes connected');
+            });
+        });
+
+        function loadKasir(searchQuery = '') {
+            let kasirs = DB.findBy('users', 'role', 'kasir');
+
+            // Filter by search
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                kasirs = kasirs.filter(k =>
+                    k.username.toLowerCase().includes(query) ||
+                    (k.toko_name && k.toko_name.toLowerCase().includes(query))
+                );
+            }
+
+            const container = document.getElementById('kasirTable');
+            const countEl = document.getElementById('kasirCount');
+
+            if (!kasirs.length) {
+                container.innerHTML = `
+                    <div class="py-8 text-center text-gray-600">
+                        <span class="material-symbols-outlined text-4xl text-primary/30">point_of_sale</span>
+                        <p class="mt-2 text-[10px] uppercase tracking-widest">${searchQuery ? 'No matching cashiers found' : 'No cashiers deployed'}</p>
+                    </div>
+                `;
+                countEl.textContent = 'No cashiers in registry';
+                return;
+            }
+
+            container.innerHTML = kasirs.map((kasir, index) => {
+                const initial = kasir.username.charAt(0).toUpperCase();
+                const stationId = `CS-${String(index + 100).padStart(3, '0')}-VG`;
+                const isActive = Math.random() > 0.5; // Simulated status
+
+                return `
+                    <div class="grid grid-cols-12 items-center py-5 px-8 hover:bg-primary/[0.02] transition-colors group">
+                        <div class="col-span-4 flex items-center gap-4">
+                            <div class="size-12 rounded-lg border ${isActive ? 'border-primary/30' : 'border-gray-300'} p-0.5 overflow-hidden bg-primary/10 flex items-center justify-center">
+                                <span class="text-primary font-bold text-lg">${initial}</span>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold uppercase tracking-wider text-gray-900">Station ${kasir.username}</h4>
+                                <p class="text-[10px] text-gray-600 font-mono">ID: ${stationId}</p>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <span class="text-[11px] font-bold text-slate-300 uppercase tracking-widest">${kasir.toko_name || 'Unassigned'}</span>
+                        </div>
+                        <div class="col-span-3 flex flex-col gap-1">
+                            <div class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full ${isActive ? 'bg-green-500 orange-glow-pip' : 'bg-slate-600'}"></span>
+                                <span class="text-[11px] font-bold ${isActive ? 'text-slate-300' : 'text-gray-600'} font-mono uppercase">${isActive ? 'Active Session' : 'Inactive'}</span>
+                            </div>
+                            <span class="text-[9px] ${isActive ? 'text-primary' : 'text-gray-600'} uppercase font-bold tracking-tighter">${Utils.formatDateShort(kasir.created_at)}</span>
+                        </div>
+                        <div class="col-span-2 flex justify-end gap-3">
+                            <button onclick="editKasir('${kasir.id}')" 
+                                class="p-2 border border-primary/20 rounded hover:border-primary/60 hover:bg-primary/5 transition-all group/btn">
+                                <span class="material-symbols-outlined text-primary text-xl clock-glow">edit_square</span>
+                            </button>
+                            <button onclick="deleteKasir('${kasir.id}')" 
+                                class="p-2 border border-red-500/20 rounded hover:border-red-500/60 hover:bg-red-500/5 transition-all group/btn">
+                                <span class="material-symbols-outlined text-red-500/60 group-hover/btn:text-red-500 text-xl transition-colors">no_accounts</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            countEl.textContent = `Displaying ${kasirs.length} cashier station${kasirs.length > 1 ? 's' : ''} in operational hub`;
+        }
+
+        function handleSearch(e) {
+            loadKasir(e.target.value.trim());
+        }
+
+        function openAddModal() {
+            editMode = false;
+            document.getElementById('modalTitle').textContent = 'Deploy New Cashier';
+            document.getElementById('kasirForm').reset();
+            document.getElementById('kasirId').value = '';
+            document.getElementById('password').required = true;
+            document.getElementById('passwordHint').textContent = 'Minimum 6 characters';
+            openModal();
+        }
+
+        function editKasir(id) {
+            const kasir = DB.getById('users', id);
+            if (!kasir) return;
+
+            editMode = true;
+            document.getElementById('modalTitle').textContent = 'Edit Cashier Station';
+            document.getElementById('kasirId').value = id;
+            document.getElementById('username').value = kasir.username;
+            document.getElementById('password').value = '';
+            document.getElementById('password').required = false;
+            document.getElementById('passwordHint').textContent = 'Leave empty to keep current password';
+            document.getElementById('tokoName').value = kasir.toko_name || '';
+            openModal();
+        }
+
+        function saveKasir() {
+            const id = document.getElementById('kasirId').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const tokoName = document.getElementById('tokoName').value.trim().toUpperCase();
+
+            if (!username || !tokoName) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Check duplicate username
+            const existing = DB.findOneBy('users', 'username', username);
+            if (existing && existing.id !== id) {
+                alert('Username already in use');
+                return;
+            }
+
+            if (editMode) {
+                const data = { username, toko_name: tokoName };
+                if (password) {
+                    if (password.length < 6) {
+                        alert('Password must be at least 6 characters');
+                        return;
+                    }
+                    data.password = DB.hashPassword(password);
+                }
+                DB.update('users', id, data);
+            } else {
+                if (!password || password.length < 6) {
+                    alert('Password must be at least 6 characters');
+                    return;
+                }
+                DB.insert('users', {
+                    username,
+                    password: DB.hashPassword(password),
+                    role: 'kasir',
+                    toko_name: tokoName
+                });
+            }
+
+            closeModal();
+            loadKasir();
+        }
+
+        function deleteKasir(id) {
+            if (!confirm('Confirm deletion of this cashier station?')) return;
+            DB.delete('users', id);
+            loadKasir();
+        }
+
+        function openModal() {
+            const backdrop = document.getElementById('modalBackdrop');
+            const modal = document.getElementById('kasirModal');
+            backdrop.classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                modal.classList.remove('opacity-0', 'scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            const backdrop = document.getElementById('modalBackdrop');
+            const modal = document.getElementById('kasirModal');
+            backdrop.classList.add('opacity-0');
+            modal.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                backdrop.classList.add('hidden');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function showSystemLogs() {
+            alert('System Logs: All operations normal');
+        }
+
+        function logout() {
+            DB.logout();
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>
