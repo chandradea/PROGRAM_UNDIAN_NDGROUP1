@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ND Group - Program Undian Berhadiah</title>
+    <meta name="description" content="Klaim hadiah undian Anda dengan memasukkan kode kupon dari struk belanja." />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#EA4C1D",
+                        secondary: "#D93A0E",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E293B",
+                    },
+                    fontFamily: {
+                        display: ["'Plus Jakarta Sans'", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                        '3xl': "2rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -10px rgba(0, 0, 0, 0.08)',
+                        'glow': '0 0 20px rgba(234, 76, 29, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .header-bg {
+            background: linear-gradient(135deg, #EA4C1D 0%, #C4380F 100%);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #10B981, #059669);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+    <!-- Header Section -->
+    <header class="header-bg relative pb-24 pt-8 px-4 sm:px-6 lg:px-8 text-center text-white overflow-hidden shadow-xl">
+        <!-- Decorative Blurs -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+            <div
+                class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white mix-blend-overlay blur-3xl opacity-20">
+            </div>
+            <div
+                class="absolute top-1/2 right-0 w-64 h-64 rounded-full bg-yellow-300 mix-blend-overlay blur-3xl opacity-20">
+            </div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+            <!-- ND GROUP Logo -->
+            <div
+                class="flex items-center justify-center gap-5 mb-6 select-none transform hover:scale-105 transition-transform duration-300">
+                <div
+                    class="w-24 h-24 md:w-32 md:h-32 bg-[#DC2626] rounded-3xl flex items-center justify-center shadow-2xl border-2 border-white/20">
+                    <span
+                        class="font-display font-black italic text-5xl md:text-7xl text-white tracking-tighter">ND</span>
+                </div>
+                <span
+                    class="font-display font-bold text-5xl md:text-7xl text-white tracking-wide drop-shadow-md">GROUP</span>
+            </div>
+
+            <!-- Badge -->
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-sm font-medium text-white mb-6 shadow-sm">
+                <span class="material-symbols-outlined text-yellow-300" style="font-size: 20px;">campaign</span>
+                Program Undian Berhadiah
+            </div>
+
+            <!-- Title -->
+            <h1
+                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight drop-shadow-md text-white font-display">
+                Menangkan Hadiah Menarik!
+            </h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow relative px-4 sm:px-6 lg:px-8 -mt-16 mb-16 z-20">
+        <div class="max-w-md mx-auto">
+            <!-- Claim Card -->
+            <div
+                class="bg-card-light dark:bg-card-dark rounded-3xl shadow-soft p-8 md:p-10 border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+
+                <!-- Card Header -->
+                <div class="text-center mb-8">
+                    <div
+                        class="w-14 h-14 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <span class="material-symbols-outlined text-primary"
+                            style="font-size: 32px;">confirmation_number</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 font-display">Klaim Hadiah Anda
+                    </h2>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">
+                        Masukkan data dari struk belanja untuk mengecek hadiah
+                    </p>
+                </div>
+
+                <!-- Claim Form -->
+                <form id="claimForm" class="space-y-6">
+                    <!-- No Transaksi Field -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                            for="noTransaksi">
+                            No Transaksi <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="material-symbols-outlined text-gray-400"
+                                    style="font-size: 20px;">receipt_long</span>
+                            </div>
+                            <input
+                                class="block w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary/20 focus:border-primary dark:bg-gray-800 transition-all duration-200 text-sm shadow-sm"
+                                id="noTransaksi" name="noTransaksi" placeholder="Contoh: TRX-12345" required
+                                type="text" />
+                        </div>
+                    </div>
+
+                    <!-- Kode Kupon Field -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                            for="kodeKupon">
+                            Kode Kupon <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="material-symbols-outlined text-gray-400"
+                                    style="font-size: 20px;">qr_code_2</span>
+                            </div>
+                            <input
+                                class="block w-full pl-11 pr-4 py-3.5 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary/20 focus:border-primary dark:bg-gray-800 transition-all duration-200 text-sm shadow-sm uppercase"
+                                id="kodeKupon" name="kodeKupon" placeholder="CONTOH: ND2-KUPON-A7X" required type="text"
+                                style="text-transform: uppercase;" />
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-orange-500/30 transition-all duration-300 transform hover:-translate-y-0.5">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-4">
+                            <span class="material-symbols-outlined group-hover:animate-ping text-orange-100"
+                                style="font-size: 20px;">search</span>
+                        </span>
+                        Cek Keberuntungan
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="relative my-8">
+                    <div aria-hidden="true" class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-100 dark:border-gray-700"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span
+                            class="px-3 bg-card-light dark:bg-card-dark text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+                            atau
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Check Voucher Link -->
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Sudah punya voucher?
+                        <a class="font-bold text-primary hover:text-secondary transition-colors duration-200 hover:underline decoration-2 decoration-primary/30"
+                            href="cek-voucher.html">
+                            Cek Voucher Saya
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-8 text-center space-y-2">
+                <p class="text-xs text-gray-400 dark:text-gray-500 font-medium">
+                    © 2024 ND Group. Syarat &amp; Ketentuan berlaku.
+                </p>
+                <p class="text-xs text-gray-400 dark:text-gray-500">
+                    <a href="admin/login.html" class="hover:text-primary transition-colors">Admin</a>
+                    <span class="mx-2">|</span>
+                    <a href="kasir/login.html" class="hover:text-primary transition-colors">Kasir</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/database.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        document.getElementById('claimForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const noTransaksi = document.getElementById('noTransaksi').value.trim();
+            const kodeKupon = document.getElementById('kodeKupon').value.trim().toUpperCase();
+
+            if (!noTransaksi || !kodeKupon) {
+                Utils.error('Mohon isi semua data');
+                return;
+            }
+
+            // Find transaction by no_transaksi AND kode_kupon
+            const transaction = DB.getAll('transactions').find(t =>
+                t.no_transaksi === noTransaksi && t.kode_kupon === kodeKupon
+            );
+
+            if (!transaction) {
+                Utils.error('Kode kupon tidak valid atau tidak ditemukan');
+                return;
+            }
+
+            if (transaction.is_claimed) {
+                Utils.error('Kupon ini sudah diklaim sebelumnya');
+                // Redirect to check voucher with transaction info
+                setTimeout(() => {
+                    window.location.href = `cek-voucher.html?trx=${encodeURIComponent(noTransaksi)}`;
+                }, 1500);
+                return;
+            }
+
+            // Valid! Save to session and redirect to claim page
+            sessionStorage.setItem('pendingClaim', JSON.stringify({
+                transactionId: transaction.id,
+                noTransaksi: transaction.no_transaksi,
+                kodeKupon: transaction.kode_kupon,
+                nominal: transaction.nominal,
+                tokoName: transaction.toko_name
+            }));
+
+            Utils.success('Kupon valid! Mengalihkan...');
+            setTimeout(() => {
+                window.location.href = 'claim.html';
+            }, 1000);
+        });
+
+        // Auto uppercase for coupon code
+        document.getElementById('kodeKupon').addEventListener('input', function () {
+            this.value = this.value.toUpperCase();
+        });
+    </script>
+</body>
+
+</html>
